@@ -18,10 +18,12 @@ const router = createRouter({
         component: () => import('@/views/home/index.vue'),
         children: [{
                 path: 'studyList',
+                name: 'StudyList',
                 component: () => import('@/views/studyCenter/studyList.vue')
             },
             {
                 path: 'studyPage',
+                name: 'StudyPage',
                 component: () => import('@/views/studyCenter/studyPage.vue')
             }
         ]
@@ -32,6 +34,7 @@ const router = createRouter({
         component: () => import('@/views/home/index.vue'),
         children: [{
             path: 'discuss',
+            name: 'Discuss',
             component: () => import('@/views/discussCenter/discuss.vue')
         }]
     }]

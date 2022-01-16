@@ -5,12 +5,16 @@ import {
 const store = createStore({
     state() {
         return {
-            count: 0
+            pageTitle: '标题',
+            activeModule: ''
         }
     },
     mutations: {
-        increment(state) {
-            state.count++
+        changePageName(state, newName) {
+            state.pageTitle = newName
+        },
+        changeActiveModule(state, moduleName) {
+            state.activeModule = moduleName
         }
     }
 })
