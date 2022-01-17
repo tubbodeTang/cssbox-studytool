@@ -11,6 +11,9 @@ import {
     TabbarItem,
     NavBar,
     Progress,
+    Icon,
+    Col,
+    Row
     // Swipe,
     // SwipeItem
 } from 'vant';
@@ -21,6 +24,9 @@ app.use(Tabbar);
 app.use(TabbarItem);
 app.use(NavBar);
 app.use(Progress);
+app.use(Icon);
+app.use(Col);
+app.use(Row);
 // app.use(Swipe);
 // app.use(SwipeItem);
 app.use(router);

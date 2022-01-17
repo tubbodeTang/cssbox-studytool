@@ -37,6 +37,16 @@ const router = createRouter({
             name: 'Discuss',
             component: () => import('@/views/discussCenter/discuss.vue')
         }]
+    }, {
+        path: '/collectionCenter',
+        name: 'CollectionCenter',
+        redirect: '/CollectionCenter/cardPage',
+        component: () => import('@/views/home/index.vue'),
+        children: [{
+            path: '/cardPage',
+            name: 'CardPage',
+            component: () => import('@/views/collectionCenter/index.vue')
+        }]
     }]
 })
 

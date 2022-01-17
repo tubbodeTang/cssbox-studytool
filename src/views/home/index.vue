@@ -1,5 +1,9 @@
 <template>
-    <van-nav-bar :title="pageTitle" />
+    <van-nav-bar :title="pageTitle" :left-arrow="showBackBtn">
+        <template #right>
+            <van-icon name="diamond" @click="toCardList" />
+        </template>
+    </van-nav-bar>
     <div class="container">
         <!-- <StudyListVue></StudyListVue> -->
         <router-view></router-view>
@@ -15,13 +19,22 @@
 
 import { computed } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 
 const store = useStore()
 
 // 在 computed 函数中访问 state
 let pageTitle = computed(() => store.state.pageTitle)
+let showBackBtn = computed(() => store.state.showBackBtn)
 
+const router = useRouter()
+function toCardList() {
+    router.push({
+        name: 'CardPage'
+    })
+    store.commit('changePageName', "收集页")
+}
 
 </script>
 
