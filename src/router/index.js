@@ -28,9 +28,19 @@ const router = createRouter({
             }
         ]
     }, {
+        path: '/creationCenter',
+        name: 'CreationCenter',
+        redirect: '/creationCenter/creation',
+        component: () => import('@/views/home/index.vue'),
+        children: [{
+            path: 'creation',
+            name: 'Creation',
+            component: () => import('@/views/creationCenter/index.vue')
+        }]
+    },{
         path: '/discussCenter',
         name: 'DiscussCenter',
-        redirect: '/DiscussCenter/discuss',
+        redirect: '/discussCenter/discuss',
         component: () => import('@/views/home/index.vue'),
         children: [{
             path: 'discuss',
@@ -40,11 +50,11 @@ const router = createRouter({
     }, {
         path: '/collectionCenter',
         name: 'CollectionCenter',
-        redirect: '/CollectionCenter/cardPage',
+        redirect: '/collectionCenter/cardList',
         component: () => import('@/views/home/index.vue'),
         children: [{
-            path: '/cardPage',
-            name: 'CardPage',
+            path: 'cardList',
+            name: 'CardList',
             component: () => import('@/views/collectionCenter/index.vue')
         }]
     }]

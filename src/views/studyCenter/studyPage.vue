@@ -31,16 +31,16 @@ console.log(lessonData)
 let lessonPage = ref(0)
 let process = ref(0)
 let curContent = ref(lessonData[0])
-store.commit('changePageName', curContent.value.title)
+store.commit('changeSubPageName', curContent.value.title)
 console.log(curContent.value)
 
 function nextPage() {
     if (lessonPage.value++ < lessonData.length - 1) {
         curContent.value = lessonData[lessonPage.value]
         process.value = lessonPage.value / lessonData.length * 100
-        store.commit('changePageName', curContent.value.title)
+        store.commit('changeSubPageName', curContent.value.title)
     } else {
-        store.commit('changePageName', '完成✅')
+        store.commit('changeSubPageName', '完成✅')
         process.value = 100
     }
 }

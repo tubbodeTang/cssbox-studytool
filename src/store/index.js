@@ -5,7 +5,8 @@ import {
 const store = createStore({
     state() {
         return {
-            pageTitle: '标题',
+            pageTitle: '学习中心',
+            lastPageName: '学习中心',
             showBackBtn: false,
             // 当前在学习的模块
             activeModule: '',
@@ -15,12 +16,31 @@ const store = createStore({
     },
     mutations: {
         changePageName(state, newName) {
+            this.commit('saveLastPageName', state.pageTitle)
             state.pageTitle = newName
-            if(newName!=='标题'){
-                
+            if (newName !== '学习中心' &&newName !== '讨论区' && newName !== '创意区') {
+                this.commit('changeBackBtn', true)
+            }else{
+                this.commit('changeBackBtn', false)
             }
         },
-        changeBackBtn(state,payload){
+        changeSubPageName(state, newName) {
+           // this.commit('saveLastPageName', state.pageTitle)
+            state.pageTitle = newName
+            if (newName !== '学习中心' &&newName !== '讨论区' && newName !== '创意区') {
+                this.commit('changeBackBtn', true)
+            }else{
+                this.commit('changeBackBtn', false)
+            }
+        },
+        saveLastPageName(state, name) {
+            state.lastPageName = name
+        },
+        popOldPageName(state){
+            this.commit('changePageName',state.lastPageName)
+        },
+        changeBackBtn(state, showOrNot) {
+            state.showBackBtn = showOrNot
 
         },
         changeActiveModule(state, moduleName) {

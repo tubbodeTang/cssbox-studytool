@@ -51,6 +51,7 @@ function toLearnPage(type) {
      router.push({
         name: 'StudyPage'
       })
+    store.commit('saveLastPageName', '学习中心')
     store.commit('changeActiveModule', type)
 
 }
