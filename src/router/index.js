@@ -56,6 +56,11 @@ const router = createRouter({
             path: 'cardList',
             name: 'CardList',
             component: () => import('@/views/collectionCenter/index.vue')
+        },
+        {
+            path: 'cardPage',
+            name: 'CardPage',
+            component: () => import('@/views/collectionCenter/cardPage.vue')
         }]
     }]
 })

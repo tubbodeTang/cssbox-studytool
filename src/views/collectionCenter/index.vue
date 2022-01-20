@@ -2,11 +2,18 @@
     <div class="card-list">
         <van-row>
             <van-col span="8" v-for="item in CardList" :key="item">
-                <div class="card-item" >
-                    <img class="card-icon" :src="'src/assets/logo.png'" />
+                <div class="card-item" @click="toCardDetail">
+                    <div class="card-icon">
+                        <img :src="'/src/assets/logo.png'" />
+                    </div>
+
                     <p class="card-name">{{ item.name }}</p>
                     <div class="card-process">
-                        <span class="process-bar">{{item.curRankNum/item.rankNum}}</span>
+                        <span
+                            class="process-bar"
+                            :style="{ width: item.curRankNum / item.rankNum * 100 + '%' }"
+                        ></span>
+                        <!-- {{ item.curRankNum / item.rankNum }} -->
                     </div>
                 </div>
             </van-col>
@@ -16,23 +23,59 @@
 
 <script setup>
 import { getAllCardsData } from '@/api/getCardsData';
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 const CardList = getAllCardsData()
-
+const store = useStore()
+const router = useRouter()
+function toCardDetail() {
+    router.push({
+        name: 'CardPage'
+    })
+    store.commit('saveLastPageName', '收集页')
+    // store.commit('changeActiveModule', )
+}
 </script>
 
 <style lang="less" scoped>
 .card-list {
     .card-item {
-        width: 100px;
         height: 100px;
+        padding: 0 15px;
         display: flex;
         text-align: center;
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: center;
 
         .card-icon {
-            width: 40px;
-            height: 40px;
+            display: flex;
+            text-align: center;
+            justify-content: space-around;
+            img {
+                height: 40px;
+                width: 40px;
+            }
+        }
+        .card-name {
+            margin: 2px 0;
+            font-size: 14px;
+        }
+
+        .card-process {
+            border-radius: 10px;
+            background-color: #dfdfdf;
+            margin: 0 15px;
+            height: 12px;
+            text-align: left;
+            box-shadow: 0px 0px 4px 0px inset #ccc;
+            .process-bar {
+                display: inline-block;
+                height: 12px;
+                position: relative;
+                top: -4px;
+                border-radius: 10px;
+                background: #acacf7;
+            }
         }
     }
 }

@@ -2,7 +2,7 @@ const cardsData = [{
     name: '高度',
     attr: 'height',
     rankNum: 5,
-    curRankNum: 0,
+    curRankNum: 4,
     methods: [{
         methodsName: 'number',
         methodsRank: ''
