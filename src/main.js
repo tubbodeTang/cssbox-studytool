@@ -13,7 +13,8 @@ import {
     Progress,
     Icon,
     Col,
-    Row
+    Row,
+    Popup
     // Swipe,
     // SwipeItem
 } from 'vant';
@@ -27,6 +28,7 @@ app.use(Progress);
 app.use(Icon);
 app.use(Col);
 app.use(Row);
+app.use(Popup);
 // app.use(Swipe);
 // app.use(SwipeItem);
 app.use(router);

@@ -1,17 +1,34 @@
 const cardsData = [{
+    name: '显示方式',
+    attr: 'display',
+    rankNum: 5,
+    curRankNum: 4,
+    brief:'设置元素的显示方式',
+    methods: [{
+        methodName: 'block',
+        methodRank: ''
+    }, {
+        methodName: 'inline',
+        methodRank: ''
+    }, {
+        methodName: 'inline-block',
+        methodRank: ''
+    }],
+    img: ''
+}, {
     name: '高度',
     attr: 'height',
     rankNum: 5,
     curRankNum: 4,
     methods: [{
-        methodsName: 'number',
-        methodsRank: ''
+        methodName: 'number',
+        methodRank: ''
     }, {
-        methodsName: 'percent',
-        methodsRank: ''
+        methodName: 'percent',
+        methodRank: ''
     }, {
-        methodsName: 'auto',
-        methodsRank: ''
+        methodName: 'auto',
+        methodRank: ''
     }],
     img: ''
 }, {
@@ -20,8 +37,8 @@ const cardsData = [{
     rankNum: 5,
     curRankNum: 0,
     methods: [{
-        methodsName: '',
-        methodsRank: ''
+        methodName: '',
+        methodRank: ''
     }],
     img: ''
 }, {
@@ -30,8 +47,8 @@ const cardsData = [{
     rankNum: 5,
     curRankNum: 0,
     methods: [{
-        methodsName: '',
-        methodsRank: ''
+        methodName: '',
+        methodRank: ''
     }],
     img: ''
 }, {
@@ -40,8 +57,8 @@ const cardsData = [{
     rankNum: 5,
     curRankNum: 0,
     methods: [{
-        methodsName: '',
-        methodsRank: ''
+        methodName: '',
+        methodRank: ''
     }],
     img: ''
 }, {
@@ -50,11 +67,15 @@ const cardsData = [{
     rankNum: 5,
     curRankNum: 0,
     methods: [{
-        methodsName: '',
-        methodsRank: ''
+        methodName: '',
+        methodRank: ''
     }],
     img: ''
 }]
-export function getAllCardsData(lessonPart) {
+export function getAllCardsData() {
     return cardsData
+}
+
+export function getLessonRelateCard(lessonPart) {
+    return cardsData.find(card => card.attr == lessonPart)
 }

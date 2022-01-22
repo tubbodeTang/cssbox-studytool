@@ -11,14 +11,29 @@
         </div>
 
         <div v-else class="finish">完成章节学习</div>
+
+        <van-popup
+            v-model:show="cardShow"
+            round
+            :style="{
+                height: '60%',
+                width: 'calc(100vw - 60px)'
+            }"
+        >
+            <transition name="van-slide-up">
+                <!-- <div v-show="visible">Slide Up</div> -->
+                <card :attr-name="lessonData.targetAttr"></card>
+            </transition>
+        </van-popup>
     </div>
 </template>
 
 <script setup>
 import { getLessonData } from '@/api/getLessonData';
 
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useStore } from 'vuex'
+import Card from '../../components/card.vue';
 
 const store = useStore()
 
@@ -27,17 +42,18 @@ const store = useStore()
 let activeModule = computed(() => store.state.activeModule)
 console.log(activeModule.value)
 const lessonData = getLessonData(activeModule.value)
-console.log(lessonData)
+const lessonContent = lessonData.lessonContent
+console.log(lessonContent)
 let lessonPage = ref(0)
 let process = ref(0)
-let curContent = ref(lessonData[0])
+let curContent = ref(lessonContent[0])
 store.commit('changeSubPageName', curContent.value.title)
 console.log(curContent.value)
 
 function nextPage() {
-    if (lessonPage.value++ < lessonData.length - 1) {
-        curContent.value = lessonData[lessonPage.value]
-        process.value = lessonPage.value / lessonData.length * 100
+    if (lessonPage.value++ < lessonContent.length - 1) {
+        curContent.value = lessonContent[lessonPage.value]
+        process.value = lessonPage.value / lessonContent.length * 100
         store.commit('changeSubPageName', curContent.value.title)
     } else {
         store.commit('changeSubPageName', '完成✅')
@@ -48,6 +64,16 @@ function nextPage() {
 let increment = () => store.commit('increment')
 
 
+let attrType = ref()
+let cardShow = ref(false)
+
+watch(process, (newVal) => {
+    if (newVal === 100) {
+        cardShow.value = true
+    } else {
+        cardShow.value = false
+    }
+})
 </script>
 
 <style lang="less" scoped>
