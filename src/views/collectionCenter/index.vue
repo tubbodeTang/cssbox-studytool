@@ -1,8 +1,8 @@
 <template>
     <div class="card-list">
         <van-row>
-            <van-col span="8" v-for="item in CardList" :key="item">
-                <div class="card-item" @click="toCardDetail">
+            <van-col span="8" v-for="item in cardList" :key="item">
+                <div class="card-item" @click="toCardDetail" :class="{ inactive: !item.state }">
                     <div class="card-icon">
                         <img :src="'/src/assets/logo.png'" />
                     </div>
@@ -23,10 +23,27 @@
 
 <script setup>
 import { getAllCardsData } from '@/api/getCardsData';
+import { computed } from 'vue';
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-const CardList = getAllCardsData()
 const store = useStore()
+const allCardList = getAllCardsData()
+const allCardsName = getAllCardsName()
+
+function getAllCardsName() {
+    return store.state.activeCardList.map(item => item.attr)
+}
+
+const cardList = computed(() => {
+    const newList = []
+    allCardList.forEach(card => {
+        let cardCopy = JSON.parse(JSON.stringify(card))
+        cardCopy.state = allCardsName.indexOf(card.attr) > -1 ?
+            true : false
+        newList.push(cardCopy)
+    });
+    return newList
+})
 const router = useRouter()
 function toCardDetail() {
     router.push({
@@ -46,6 +63,10 @@ function toCardDetail() {
         text-align: center;
         flex-direction: column;
         justify-content: center;
+
+        &.inactive {
+            opacity: 0.4;
+        }
 
         .card-icon {
             display: flex;

@@ -15,37 +15,47 @@ const store = createStore({
         }
     },
     mutations: {
+        // 页面跳转相关
         changePageName(state, newName) {
             this.commit('saveLastPageName', state.pageTitle)
             state.pageTitle = newName
-            if (newName !== '学习中心' &&newName !== '讨论区' && newName !== '创意区') {
+            if (newName !== '学习中心' && newName !== '讨论区' && newName !== '创意区') {
                 this.commit('changeBackBtn', true)
-            }else{
+            } else {
                 this.commit('changeBackBtn', false)
             }
         },
+        // 二级页面跳转相关
         changeSubPageName(state, newName) {
-           // this.commit('saveLastPageName', state.pageTitle)
             state.pageTitle = newName
-            if (newName !== '学习中心' &&newName !== '讨论区' && newName !== '创意区') {
+            if (newName !== '学习中心' && newName !== '讨论区' && newName !== '创意区') {
                 this.commit('changeBackBtn', true)
-            }else{
+            } else {
                 this.commit('changeBackBtn', false)
             }
         },
+        // 进入二级页面时保存返回时的一级页面名称
         saveLastPageName(state, name) {
             state.lastPageName = name
         },
-        popOldPageName(state){
-            this.commit('changePageName',state.lastPageName)
+        // 返回一级页面时弹出保存的一级页面名称
+        popOldPageName(state) {
+            this.commit('changePageName', state.lastPageName)
         },
+        // 是否显示后退按钮
         changeBackBtn(state, showOrNot) {
             state.showBackBtn = showOrNot
-
         },
+        // 当前在学习的模块
         changeActiveModule(state, moduleName) {
             state.activeModule = moduleName
         },
+        // 通过关卡学习，记录学习进度
+        updateCardProgress(state, newRank) {
+            const card = state.activeCardList.find(item => item.attr == card.attr)
+            card.curRankNum = newRank
+        },
+        // 通过关卡学习，记录学习进度
         pushActiveCard(state, card) {
             state.activeCardList.push(card)
         }

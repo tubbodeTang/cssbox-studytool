@@ -2,8 +2,8 @@ const cardsData = [{
     name: '显示方式',
     attr: 'display',
     rankNum: 5,
-    curRankNum: 4,
-    brief:'设置元素的显示方式',
+    curRankNum: 0,
+    brief: '设置元素的显示方式',
     methods: [{
         methodName: 'block',
         methodRank: ''
@@ -19,7 +19,7 @@ const cardsData = [{
     name: '高度',
     attr: 'height',
     rankNum: 5,
-    curRankNum: 4,
+    curRankNum: 0,
     methods: [{
         methodName: 'number',
         methodRank: ''

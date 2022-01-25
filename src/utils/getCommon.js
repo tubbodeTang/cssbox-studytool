@@ -13,3 +13,15 @@ const ColorList = {
 export function getColorByType(typeName, CSSAttr) {
     return ColorList[typeName][CSSAttr]
 }
+
+
+
+
+export function countCardProgress(card, cardList) {
+    let cardRecord = cardList.find(item => item.attr == card.attr)
+    if (cardRecord) {
+        return cardRecord.curRankNum
+    } else {
+        return -1
+    }
+}

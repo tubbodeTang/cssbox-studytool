@@ -23,12 +23,15 @@
             </div>
         </div>
 
-        <div class="check-btn">确定</div>
+        <div class="check-btn" @click="saveCard">确定</div>
     </div>
 </template>
 
 <script setup>
 import { getLessonRelateCard } from '@/api/getCardsData.js'
+import { useStore } from 'vuex'
+import { countCardProgress } from '@/utils/getCommon.js'
+
 let props = defineProps({
     attrName: {
         type: String,
@@ -40,7 +43,15 @@ let props = defineProps({
 const cardInfo = getLessonRelateCard(props.attrName)
 console.log(cardInfo)
 
-
+const store = useStore()
+function saveCard() {
+    const cardRank=countCardProgress(cardInfo,store.state.activeCardList)
+    if(cardRank>=0){
+        store.commit('updateCardProgress',cardRank+1)
+    }else{
+        store.commit('pushActiveCard',cardInfo)
+    }
+}
 </script>
 
 <style scoped lang="less">
