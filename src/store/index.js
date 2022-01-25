@@ -51,9 +51,9 @@ const store = createStore({
             state.activeModule = moduleName
         },
         // 通过关卡学习，记录学习进度
-        updateCardProgress(state, newRank) {
-            const card = state.activeCardList.find(item => item.attr == card.attr)
-            card.curRankNum = newRank
+        updateCardProgress(state, newCard) {
+            const card = state.activeCardList.find(item => item.attr == newCard.card.attr)
+            card.curRankNum = newCard.cardRank
         },
         // 通过关卡学习，记录学习进度
         pushActiveCard(state, card) {
