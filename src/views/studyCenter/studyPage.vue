@@ -80,24 +80,4 @@ watch(process, (newVal) => {
 :deep(.van-popup) {
     background-color: transparent;
 }
-
-/* 动画代码 */
-@keyframes example {
-    0% {
-        transform: rotateY(0deg);
-    }
-    25% {
-        transform: rotateY(130deg);
-    }
-    50% {
-        transform: rotateY(260deg);
-    }
-    75% {
-        transform: rotateY(300deg);
-    }
-    100% {
-        transform: rotateY(360deg);
-    }
-}
-
 </style>
