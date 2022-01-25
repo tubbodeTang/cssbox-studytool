@@ -12,19 +12,18 @@
 
         <div v-else class="finish">完成章节学习</div>
 
-        <van-popup
-            v-model:show="cardShow"
-            round
-            :style="{
-                height: '60%',
-                width: 'calc(100vw - 60px)'
-            }"
-        >
-            <transition name="van-slide-up">
-                <!-- <div v-show="visible">Slide Up</div> -->
+        <transition name="van-slide-up">
+            <van-popup
+                v-model:show="cardShow"
+                round
+                :style="{
+                    height: '60%',
+                    width: 'calc(100vw - 60px)'
+                }"
+            >
                 <card :attr-name="lessonData.targetAttr"></card>
-            </transition>
-        </van-popup>
+            </van-popup>
+        </transition>
     </div>
 </template>
 
@@ -77,4 +76,28 @@ watch(process, (newVal) => {
 </script>
 
 <style lang="less" scoped>
+/* 应用动画的元素 */
+:deep(.van-popup) {
+    background-color: transparent;
+}
+
+/* 动画代码 */
+@keyframes example {
+    0% {
+        transform: rotateY(0deg);
+    }
+    25% {
+        transform: rotateY(130deg);
+    }
+    50% {
+        transform: rotateY(260deg);
+    }
+    75% {
+        transform: rotateY(300deg);
+    }
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+
 </style>

@@ -1,10 +1,13 @@
  <template>
     <div class="card">
-        <div class="card-icon">
-            <img :src="'/src/assets/logo.png'" />
+        <div>
+            <div class="card-icon">
+                <img :src="'/src/assets/logo.png'" />
+            </div>
+            <!-- 属性名 -->
+            <p class="card-name">{{ attrName }}</p>
         </div>
-        <!-- 属性名 -->
-        <p class="card-name">{{ attrName }}</p>
+
         <!-- 属性功能简介 -->
         <div class="card-content">
             <span class="content">{{ cardInfo.brief }}</span>
@@ -12,10 +15,15 @@
         <!-- 属性值及级别列举 -->
         <div class="card-item-list">
             <div class="list-item" v-for="item in cardInfo.methods" :key="item">
-                <span>{{ item.methodName }}</span>
-                <span></span>
+                <span class="title">{{ item.methodName }}</span>
+                <span class="content">
+                    {{ item.methodBreif }}
+                    <van-rate v-model="value" readonly allow-half />
+                </span>
             </div>
         </div>
+
+        <div class="check-btn">确定</div>
     </div>
 </template>
 
@@ -37,6 +45,7 @@ console.log(cardInfo)
 
 <style scoped lang="less">
 .card {
+    background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 10px;
     height: 100%;
@@ -45,24 +54,62 @@ console.log(cardInfo)
     text-align: center;
     flex-direction: column;
     justify-content: space-around;
+    box-sizing: border-box;
 
+    animation-name: example;
+    animation-duration: 1s;
+    // top: 20%;
+    // left: 8%;
     .card-icon {
         display: flex;
         text-align: center;
         justify-content: space-around;
         img {
-            height: 60px;
-            width: 60px;
+            height: 150px;
+            width: 150px;
         }
-    }
-
-    .card-name {
+        .card-name {
+        }
     }
 
     .card-content {
     }
 
     .card-item-list {
+        padding: 0 10px;
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            .title {
+                text-align: left;
+                width: 100px;
+            }
+            .content {
+            }
+        }
+    }
+
+    .check-btn {
+        text-align: center;
+    }
+}
+
+/* 动画代码 */
+@keyframes example {
+    0% {
+        transform: rotateY(0deg);
+    }
+    25% {
+        transform: rotateY(130deg);
+    }
+    50% {
+        transform: rotateY(260deg);
+    }
+    75% {
+        transform: rotateY(300deg);
+    }
+    100% {
+        transform: rotateY(360deg);
     }
 }
 </style>
