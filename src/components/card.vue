@@ -46,9 +46,10 @@ console.log(cardInfo)
 const store = useStore()
 function saveCard() {
     const cardRank=countCardProgress(cardInfo,store.state.activeCardList)
-    if(cardRank>=0){
+    if(cardRank>0){
         store.commit('updateCardProgress',{card:cardInfo,cardRank:cardRank+1})
     }else{
+        cardInfo.curRankNum=1 // 从一级开始记录
         store.commit('pushActiveCard',cardInfo)
     }
 }
