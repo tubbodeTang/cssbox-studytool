@@ -2,7 +2,11 @@
     <div class="card-list">
         <van-row>
             <van-col span="8" v-for="item in cardList" :key="item">
-                <div class="card-item" @click="toCardDetail" :class="{ inactive: !item.state }">
+                <div
+                    class="card-item"
+                    @click="toCardDetail(item)"
+                    :class="{ inactive: !item.state }"
+                >
                     <div class="card-icon">
                         <img :src="'/src/assets/logo.png'" />
                     </div>
@@ -45,9 +49,10 @@ const cardList = computed(() => {
     return newList
 })
 const router = useRouter()
-function toCardDetail() {
+function toCardDetail(card) {
     router.push({
-        name: 'CardPage'
+        name: 'CardPage',
+        params: { attrName: card.attr }
     })
     store.commit('saveLastPageName', '收集页')
     // store.commit('changeActiveModule', )
