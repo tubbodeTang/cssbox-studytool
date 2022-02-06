@@ -36,6 +36,11 @@ const router = createRouter({
             path: 'creation',
             name: 'Creation',
             component: () => import('@/views/creationCenter/index.vue')
+        },
+        {
+            path: 'addCreation',
+            name: 'AddCreation',
+            component: () => import('@/views/creationCenter/addCreation.vue')
         }]
     },{
         path: '/discussCenter',
