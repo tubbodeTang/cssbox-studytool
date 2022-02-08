@@ -28,13 +28,24 @@ const cardsData = [{
     curRankNum: 0,
     methods: [{
         methodName: 'number',
-        methodRank: ''
+        methodRank: '',
+        unit: [{
+            methodName: 'px'
+        }, {
+            methodName: '%'
+        }, {
+            methodName: 'em'
+        }, {
+            methodName: 'rem'
+        }]
     }, {
-        methodName: 'percent',
-        methodRank: ''
+        methodName: 'initial',
+        methodRank: '',
+        unit: [],
     }, {
         methodName: 'auto',
-        methodRank: ''
+        methodRank: '',
+        unit: [],
     }],
     img: ''
 }, {
@@ -92,4 +103,10 @@ export function getLessonRelateCard(lessonPart) {
 // 获取某属性的卡片（属性）数据
 export function getCardInfo(attrName) {
     return cardsData.find(card => card.attr == attrName)
+}
+
+// 获取某属性的技能（属性值）数据
+export function getCardMethods(attrName) {
+    const card = cardsData.find(card => card.attr == attrName)
+    return card.methods
 }
