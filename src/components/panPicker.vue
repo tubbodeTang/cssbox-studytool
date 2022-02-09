@@ -1,22 +1,23 @@
 <template>
     <div>
-        <button @click="showPicker()">选择器</button>
-        <span>{{ city }}</span>
+        <div class="result-tip">
+            <span>{{ result }}</span>
+        </div>
 
         <div class="picker" ref="picker">
             <section class="picker-main" :style="{ height: pickerHeight }">
-                <h3>
+                <!-- <h3>
                     <span @click="show = false">取消</span>
                     <span>请选择</span>
                     <span @click="sure()">确认</span>
-                </h3>
+                </h3>-->
                 <ul ref="ul" :style="{ visibility: show ? 'visible' : 'hidden' }">
                     <li
                         v-for="(item, index) in list"
                         :key="index"
                         :class="active == item.id ? 'active' : active == item.id - 1 || active == item.id + 1 ? 'active2' : null"
-                        :ref="el => { if (el) divs['li' + item.label] = el }"
-                    >{{ item.val }}</li>
+                        :ref="el => { if (el) divs['li' + item.methodName] = el }"
+                    >{{ item.methodName }}</li>
                 </ul>
             </section>
         </div>
@@ -26,7 +27,44 @@
 
 <script setup>
 
-import { ref, onMounted, nextTick, computed, watch } from 'vue'
+import { ref, onMounted, nextTick, computed, watch, onUnmounted } from 'vue'
+
+
+const props = defineProps({
+    listSrc: {
+        type: Array,
+        default: () => {
+            return [
+                {
+                    id: 0,
+                    methodName: "北京",
+                },
+                {
+                    id: 1,
+                    methodName: "上海",
+                },
+                {
+                    id: 2,
+                    methodName: "广州",
+                },
+                {
+                    id: 3,
+                    methodName: "深圳",
+                },
+                {
+                    id: 4,
+                    methodName: "北海",
+                },
+            ]
+        }
+    },
+    enable: {
+        type: Boolean,
+        default: () => {
+            return false
+        }
+    }
+})
 
 const ul = ref(null)
 const picker = ref(null)
@@ -39,37 +77,11 @@ onMounted(() => {
         computeActive();
     });
 })
-let list = ref([
-    {
-        id: 0,
-        val: "北京",
-        label: "bj"
-    },
-    {
-        id: 1,
-        val: "上海",
-        label: "sh"
-    },
-    {
-        id: 2,
-        val: "广州",
-        label: "gz"
-    },
-    {
-        id: 3,
-        val: "深圳",
-        label: "sz"
-    },
-    {
-        id: 4,
-        val: "北海",
-        label: "bh"
-    },
-])
+let list = ref(props.listSrc)
 
-let show = ref(false)
+let show = ref(false) // 是否显示选择框
 let active = ref(0)
-let city = ref("")
+let result = ref("")
 let listOffsetTop = []
 let timer = null
 
@@ -79,47 +91,70 @@ const pickerHeight = computed(() => {
     return height + 'px'
 })
 
-// function showPicker() {
-//     show.value = true;
-//     active.value = 0;
-//     nextTick(() => {
-//         getOffsetTop();
-//         computeActive();
-//     });
-// }
+// 溢出宽度，随选择的数字单位是否有正负、是否有上下限判断数值范围
+// const pickerWidth = computed(() => {
+//     // TODO: 812px 换成窗口高度,并且可随设备变化
+//     let height = 812 + (list.value.length - 1) * 40
+//     return height + 'px'
+// })
 
 watch(active, () => {
     sure()
 })
 function sure() {
     list.value.map((item, index) => {
-        item.id == active.value ? (city.value = item.val) : null;
+        item.id == active.value ? (result.value = item.methodName) : null;
     });
-    show.value = false;
 }
 function getOffsetTop() {
     listOffsetTop = [];
-    list.value.map((item, index) => {
-        let liTop = divs.value["li" + item.label];
+    list.value.forEach((item, index) => {
+        let liTop = divs.value["li" + item.methodName];
         listOffsetTop.push(liTop.offsetTop);
     });
     console.log(listOffsetTop)
 }
+let timeout = null;
 function computeActive() {
     // let scroll = ul.value;
     let scroll = picker.value;
     console.log(scroll)
-    scroll.addEventListener("scroll", () => {
-        show.value = true
-        listOffsetTop.map((item, index) => {
-            item <= scroll.scrollTop ? (active.value = index) : null;
-        });
-    });
+    scroll.addEventListener("scroll",
+        () => {
+            show.value = true
+            listOffsetTop.map((item, index) => {
+                if (scroll.scrollTop >= 20 && item <= scroll.scrollTop) {
+                    active.value = index
+                }
+            });
+            if (timeout !== null) clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                show.value = false;
+            }, 500);
+        }
+    );
 }
+
+onUnmounted(() => {
+    picker.value.removeEventListener("scroll")
+})
+
+
 </script>
 <style lang="less" scoped>
+.result-tip {
+    display: flex;
+    justify-content: center;
+    span {
+        background-color: #ccc;
+        border-radius: 30px;
+        position: fixed;
+        top: 66px;
+        padding: 0 10px;
+    }
+}
 .picker {
-    background-color: rgba(0, 0, 0, 0.2);
+    // background-color: rgba(0, 0, 0, 0.2);
     max-height: 100vh;
     width: 100%;
     position: absolute;
@@ -131,6 +166,10 @@ function computeActive() {
     // flex-direction: column;
     // justify-content: space-around;
     overflow: auto;
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+        display: none; /* Chrome Safari */
+    }
     .picker-main {
         width: 100%;
         height: 1600px;
@@ -139,16 +178,16 @@ function computeActive() {
         margin: 0 auto;
         // background-color: #fff;
         background-color: transparent;
-        h3 {
-            padding: 0;
-            margin: 0;
-            // display: flex;
-            display: none;
-            justify-content: space-around;
-            border-bottom: solid 1px #ddd;
-            font-size: 20px;
-            line-height: 40px;
-        }
+        // h3 {
+        //     padding: 0;
+        //     margin: 0;
+        //     // display: flex;
+        //     display: none;
+        //     justify-content: space-around;
+        //     border-bottom: solid 1px #ddd;
+        //     font-size: 20px;
+        //     line-height: 40px;
+        // }
         ul {
             width: 70%;
             // max-height: 250px;
