@@ -1,5 +1,9 @@
 <template>
-    <div class="boxD" :style="styleObject">This is a commonBox:{{ index }}</div>
+    <div
+        class="boxD"
+        :style="styleObject"
+        :class="{ active: isActive }"
+    >This is a commonBox:{{ index }}</div>
 </template>
 
 <script setup>
@@ -16,6 +20,12 @@ const props = defineProps({
             }
         }
     },
+    isActive: {
+        type: Boolean,
+        default: () => {
+            return false
+        }
+    },
     index: {
         type: Number,
         default: () => {
@@ -27,7 +37,11 @@ const styleObject = ref(props.styleObj)
 console.log(props.styleObj)
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .boxD {
+    opacity: 0.5;
+    &.active {
+        opacity: 1;
+    }
 }
 </style>

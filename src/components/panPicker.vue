@@ -1,25 +1,23 @@
 <template>
-    <div>
-        <div class="picker" ref="picker" :style="{ zIndex: zIndex }">
-            <div class="result-tip">
-                <span>{{ result&&result.methodName }}</span>
-            </div>
-            <section class="picker-main" :style="{ height: pickerHeight }">
-                <!-- <h3>
+    <div class="picker" ref="picker" :style="{ zIndex: zIndex }">
+        <div class="result-tip" :style="{ visibility: enable ? 'visible' : 'hidden' }">
+            <span>{{ result && result.methodName }}</span>
+        </div>
+        <section class="picker-main" :style="{ height: pickerHeight }">
+            <!-- <h3>
                     <span @click="show = false">取消</span>
                     <span>请选择</span>
                     <span @click="sure()">确认</span>
-                </h3>-->
-                <ul ref="ul" :style="{ visibility: show ? 'visible' : 'hidden' }">
-                    <li
-                        v-for="(item) in list"
-                        :key="item"
-                        :class="active == item.id ? 'active' : active == item.id - 1 || active == item.id + 1 ? 'active2' : null"
-                        :ref="el => { if (el) divs['li' + item.methodName] = el }"
-                    >{{ item.methodName }}</li>
-                </ul>
-            </section>
-        </div>
+            </h3>-->
+            <ul ref="ul" :style="{ visibility: show ? 'visible' : 'hidden' }">
+                <li
+                    v-for="(item) in list"
+                    :key="item"
+                    :class="active == item.id ? 'active' : active == item.id - 1 || active == item.id + 1 ? 'active2' : null"
+                    :ref="el => { if (el) divs['li' + item.methodName] = el }"
+                >{{ item.methodName }}</li>
+            </ul>
+        </section>
     </div>
 </template>
 
@@ -124,7 +122,7 @@ function sure() {
     list.value.map((item, index) => {
         item.id == active.value ? (result.value = item) : null;
     });
-    emit('change',result.value)
+    emit('change', result.value)
 }
 
 let timeout = null;
