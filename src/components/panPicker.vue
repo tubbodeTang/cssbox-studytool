@@ -1,10 +1,9 @@
 <template>
     <div>
-        <div class="result-tip">
-            <span>{{ result }}</span>
-        </div>
-
-        <div class="picker" ref="picker">
+        <div class="picker" ref="picker" :style="{ zIndex: zIndex }">
+            <div class="result-tip">
+                <span>{{ result&&result.methodName }}</span>
+            </div>
             <section class="picker-main" :style="{ height: pickerHeight }">
                 <!-- <h3>
                     <span @click="show = false">取消</span>
@@ -13,8 +12,8 @@
                 </h3>-->
                 <ul ref="ul" :style="{ visibility: show ? 'visible' : 'hidden' }">
                     <li
-                        v-for="(item, index) in list"
-                        :key="index"
+                        v-for="(item) in list"
+                        :key="item"
                         :class="active == item.id ? 'active' : active == item.id - 1 || active == item.id + 1 ? 'active2' : null"
                         :ref="el => { if (el) divs['li' + item.methodName] = el }"
                     >{{ item.methodName }}</li>
@@ -73,21 +72,31 @@ onMounted(() => {
     // DOM 元素将在初始渲染后分配给 ref
     console.log(ul.value) // <div>This is a root element</div>
     nextTick(() => {
-        getOffsetTop();
         computeActive();
     });
 })
-let list = ref(props.listSrc)
-
+let list = computed(() => {
+    return props.listSrc
+})
 let show = ref(false) // 是否显示选择框
-let active = ref(0)
-let result = ref("")
-let listOffsetTop = []
-let timer = null
+let active = ref(1) // 初始选中值，id 从 1 开始
+let result = ref(list.value[0]) // 初始选中值
 
+// 计算所有选项的位置
+const listOffsetTop = computed(() => {
+    let listOffsetTop = [];
+    props.listSrc.forEach((item, index) => {
+        let liTop = divs.value["li" + item.methodName];
+        listOffsetTop.push(liTop.offsetTop);
+    });
+    console.log(listOffsetTop)
+    return listOffsetTop
+})
+
+// 计算溢出高度
 const pickerHeight = computed(() => {
     // TODO: 812px 换成窗口高度,并且可随设备变化
-    let height = 812 + (list.value.length - 1) * 40
+    let height = 812 - 50 + (list.value.length - 1) * 40
     return height + 'px'
 })
 
@@ -98,22 +107,26 @@ const pickerHeight = computed(() => {
 //     return height + 'px'
 // })
 
+// 调整层级，不可用时层级降低，可用时置于顶层
+const zIndex = computed(() => {
+    let z = -1
+    if (props.enable) {
+        z = 10
+    }
+    return z
+})
+
 watch(active, () => {
     sure()
 })
+const emit = defineEmits(['change'])
 function sure() {
     list.value.map((item, index) => {
-        item.id == active.value ? (result.value = item.methodName) : null;
+        item.id == active.value ? (result.value = item) : null;
     });
+    emit('change',result.value)
 }
-function getOffsetTop() {
-    listOffsetTop = [];
-    list.value.forEach((item, index) => {
-        let liTop = divs.value["li" + item.methodName];
-        listOffsetTop.push(liTop.offsetTop);
-    });
-    console.log(listOffsetTop)
-}
+
 let timeout = null;
 function computeActive() {
     // let scroll = ul.value;
@@ -122,9 +135,9 @@ function computeActive() {
     scroll.addEventListener("scroll",
         () => {
             show.value = true
-            listOffsetTop.map((item, index) => {
-                if (scroll.scrollTop >= 20 && item <= scroll.scrollTop) {
-                    active.value = index
+            listOffsetTop.value.map((item, index) => {
+                if (item <= scroll.scrollTop) {
+                    active.value = index + 1
                 }
             });
             if (timeout !== null) clearTimeout(timeout);
@@ -149,16 +162,16 @@ onUnmounted(() => {
         background-color: #ccc;
         border-radius: 30px;
         position: fixed;
-        top: 66px;
+        bottom: 66px;
         padding: 0 10px;
     }
 }
 .picker {
     // background-color: rgba(0, 0, 0, 0.2);
-    max-height: 100vh;
+    max-height: calc(100vh - 96px);
     width: 100%;
     position: absolute;
-    top: 0;
+    top: 46px;
     left: 0;
     bottom: 0;
     right: 0;

@@ -1,13 +1,7 @@
 <template>
     <div>
         <!-- 创作区域 -->
-        <div
-            class="content"
-            v-hammer:swipe.horizontal="test"
-            v-hammer:tap="test"
-            v-hammer:pan.up="showMethodSelect"
-            v-hammer:pan.down="showMethodSelect"
-        >
+        <div class="content">
             <CommonBox
                 v-for="(item) in elementList"
                 :key="item"
@@ -18,9 +12,11 @@
                 @uploadData="getData"
                 @click="setCurRef(item.id)"
             ></CommonBox>
+            <!-- 纵向选择器  选择属性值（数值类:单位)或者（项目值） -->
+            <PanPicker :listSrc="columns" :enable="showMethodPicker" @change="attrValChange"></PanPicker>
         </div>
-        <!-- 纵向选择器  选择属性值（数值类:单位)或者（项目值） -->
-        <van-popup
+
+        <!-- <van-popup
             :show="showMethodPicker"
             :overlay-class="'select-popup'"
             class="select-popup-content"
@@ -33,7 +29,7 @@
                 :columns-field-names="customFieldName"
                 @change="attrValChange"
             />
-        </van-popup>
+        </van-popup>-->
         <!-- 添加元素列表 -->
         <!-- <van-action-sheet v-model:show="attrAdd" title="标题">
             <div class="popup-content">内容1</div>
@@ -80,6 +76,7 @@
 
 <script setup>
 import { getAllCardsData, getCardMethods } from '@/api/getCardsData';
+import PanPicker from '@/components/panPicker.vue'
 import CommonBox from '@/components/commonBox.vue'
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex'
@@ -147,55 +144,34 @@ function setCurRef(id) {
 // 元素删除
 function deleteElement() {
     const curElePosi = elementList.value.findIndex(item => item.id === curElementId)
-    elementList.value.splice(curElePosi, 1)
+    curElePosi >= 0 && elementList.value.splice(curElePosi, 1)
     curElementId = null // 清空当前选中标签
 }
 
 // 元素属性修改
 const columns = ref([])
-const customFieldName = {
-    text: 'methodName',
-    children: 'unit',
-};
-let itemCount = ref(0)
-let itemHeight = ref(44)
 let adjustingAttr = '' // 当前正在修改的属性
+
+// 纵向滑动显示属性值选择器并选择
+let showMethodPicker = ref(false)
+
 // 获取属性及属性值信息
 function getMethods(attrName) {
     adjustingAttr = attrName
     columns.value = getCardMethods(attrName)
-    itemCount.value = columns.value.length
-    let height = document.documentElement.clientHeight || document.body.clientHeight;
-    console.log(height)
-    itemHeight.value = (height - 96) / itemCount.value
-    console.log(itemHeight.value)
-
-
     attrJustify.value = false
-}
-
-// 纵向滑动显示属性值选择器并选择
-let showMethodPicker = ref(false)
-function showMethodSelect(e) {
-    console.log(e);
     showMethodPicker.value = true
 }
 
 function attrValChange(params) {
-    debugger
-    if (params.methodName !== 'number') {
-        let curEle = elementList.value.find(item => item.id === curElementId)
+    let curEle = elementList.value.find(item => item.id === curElementId)
+    if (params.methodName.indexOf('number') === -1) {
         curEle.styleObject[adjustingAttr] = params.methodName
         console.log(elementList.value)
-        showMethodPicker.value = false
+    } else {
+        const seperate = params.methodName.split('-')
+        curEle.styleObject[adjustingAttr] = '30' + seperate[1]
     }
-}
-
-function test(e) {
-    console.log(e);
-}
-function test2(e) {
-    console.log('aaaa');
 }
 
 const wordDone = () => Toast('作品完成');
