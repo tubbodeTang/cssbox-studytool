@@ -5,16 +5,19 @@ const cardsData = [{
     curRankNum: 0,
     brief: '设置元素的显示方式',
     methods: [{
+        id: 1,
         methodName: 'block',
         methodBreif: '元素将按块级元素显示',
         methodRank: '',
         methodCurRank: ''
     }, {
+        id: 2,
         methodName: 'inline',
         methodBreif: '元素将按行级元素显示',
         methodRank: '',
         methodCurRank: ''
     }, {
+        id: 3,
         methodName: 'inline-block',
         methodBreif: '元素将按行级块状元素显示',
         methodRank: '',
@@ -27,25 +30,29 @@ const cardsData = [{
     rankNum: 5,
     curRankNum: 0,
     methods: [{
-        methodName: 'number',
+        id: 1,
+        methodName: 'number-px',
         methodRank: '',
-        unit: [{
-            methodName: 'px'
-        }, {
-            methodName: '%'
-        }, {
-            methodName: 'em'
-        }, {
-            methodName: 'rem'
-        }]
     }, {
+        id: 2,
+        methodName: 'number-%',
+        methodRank: '',
+    }, {
+        id: 3,
+        methodName: 'number-em',
+        methodRank: '',
+    }, {
+        id: 4,
+        methodName: 'number-rem',
+        methodRank: '',
+    }, {
+        id: 5,
         methodName: 'initial',
         methodRank: '',
-        unit: [],
     }, {
+        id: 6,
         methodName: 'auto',
         methodRank: '',
-        unit: [],
     }],
     img: ''
 }, {
@@ -54,6 +61,7 @@ const cardsData = [{
     rankNum: 5,
     curRankNum: 0,
     methods: [{
+        id: 1,
         methodName: '',
         methodRank: ''
     }],
@@ -64,6 +72,7 @@ const cardsData = [{
     rankNum: 5,
     curRankNum: 0,
     methods: [{
+        id: 1,
         methodName: '',
         methodRank: ''
     }],
@@ -74,6 +83,7 @@ const cardsData = [{
     rankNum: 5,
     curRankNum: 0,
     methods: [{
+        id: 1,
         methodName: '',
         methodRank: ''
     }],
@@ -84,6 +94,7 @@ const cardsData = [{
     rankNum: 5,
     curRankNum: 0,
     methods: [{
+        id: 1,
         methodName: '',
         methodRank: ''
     }],
@@ -100,7 +111,7 @@ export function getLessonRelateCard(lessonPart) {
     return cardsData.find(card => card.attr == lessonPart)
 }
 
-// 获取某属性的卡片（属性）数据
+// 获取某卡片（属性）数据
 export function getCardInfo(attrName) {
     return cardsData.find(card => card.attr == attrName)
 }
