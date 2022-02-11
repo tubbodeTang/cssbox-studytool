@@ -1,7 +1,7 @@
 <template>
     <div class="picker" ref="picker" :style="{ zIndex: zIndex }">
         <div class="result-tip" :style="{ visibility: enable ? 'visible' : 'hidden' }">
-            <span>{{ result && result.methodName }}</span>
+            <span :style="{ bottom: tipOpt.tipBottom }">{{ result && result.methodName }}</span>
         </div>
         <section class="picker-main" :style="{ height: pickerHeight }">
             <!-- <h3>
@@ -60,7 +60,16 @@ const props = defineProps({
         default: () => {
             return false
         }
-    }
+    },
+    tipOpt: {
+        type: Object,
+        default: () => {
+            return {
+                tipBottom: '66px',
+                tipVal: 0
+            }
+        }
+    },
 })
 
 const ul = ref(null)

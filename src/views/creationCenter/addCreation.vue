@@ -14,7 +14,12 @@
                 @click.stop="setCurEle(item.id)"
             ></CommonBox>
             <!-- 纵向选择器  选择属性值（数值类:单位)或者（项目值） -->
-            <PanPicker :listSrc="columns" :enable="showMethodPicker" @change="attrValChange"></PanPicker>
+            <PanPicker
+                :listSrc="columns"
+                :enable="showMethodPicker"
+                @change="attrValChange"
+                :tipOpt="tipOpt"
+            ></PanPicker>
         </div>
         <!-- 元素调整选项列表 -->
         <van-action-sheet v-model:show="attrJustify" title="标题">
@@ -36,6 +41,33 @@
             </div>
         </van-action-sheet>
 
+        <!-- 方位选择 -->
+        <div class="direction-picker" v-if="showDirection">
+            <van-tag
+                :plain="direction !== 'top'"
+                round
+                type="primary"
+                @click="changeDirection('top')"
+            >top</van-tag>
+            <van-tag
+                :plain="direction !== 'bottom'"
+                round
+                type="primary"
+                @click="changeDirection('bottom')"
+            >bottom</van-tag>
+            <van-tag
+                :plain="direction !== 'left'"
+                round
+                type="primary"
+                @click="changeDirection('left')"
+            >left</van-tag>
+            <van-tag
+                :plain="direction !== 'right'"
+                round
+                type="primary"
+                @click="changeDirection('right')"
+            >right</van-tag>
+        </div>
         <van-action-bar>
             <van-action-bar-icon icon="plus" text="添加元素" @click="addElement" />
             <van-action-bar-icon
@@ -133,11 +165,13 @@ function setCurEle(id) {
 }
 function cleanCurEle() {
     if (!showMethodPicker.value) {
+        adjustingAttr.value = ''
         curElementId.value = null // 清空当前选中标签？
     }
 }
 function releaseCurEle() {
     showMethodPicker.value = false
+    adjustingAttr.value = ''
     // curElementId.value = null // 清空当前选中标签？
 }
 
@@ -145,6 +179,7 @@ function releaseCurEle() {
 function deleteElement() {
     const curElePosi = elementList.value.findIndex(item => item.id === curElementId.value)
     curElePosi >= 0 && elementList.value.splice(curElePosi, 1)
+    adjustingAttr.value = ''
     curElementId.value = null // 清空当前选中标签
 }
 
@@ -155,25 +190,59 @@ function showAttrAdjust() {
 }
 
 const columns = ref([])
-let adjustingAttr = '' // 当前正在修改的属性
+let adjustingAttr = ref('') // 当前正在修改的属性
 let showMethodPicker = ref(false)// 纵向滑动显示属性值选择器并选择
 // 获取属性及属性值信息
 function getMethods(attrName) {
-    adjustingAttr = attrName
+    adjustingAttr.value = attrName
     columns.value = getCardMethods(attrName)
     attrJustify.value = false
     showMethodPicker.value = true
 }
 
+// 显示方位选择
+let showDirection = computed(() => {
+    return adjustingAttr.value === 'padding' || adjustingAttr.value === 'margin' || adjustingAttr.value === 'border-style' || adjustingAttr.value === 'border-width' || adjustingAttr.value === 'border-color' || adjustingAttr.value === 'position-offset' ? true : false
+})
+
+let direction = ref('top')
+function changeDirection(params) {
+    direction.value = params
+}
+// 获取真实属性名
+function getAttrName() {
+    let attrName = ''
+    if (adjustingAttr.value === 'padding' || adjustingAttr.value === 'margin') {
+        attrName = adjustingAttr.value + '-' + direction.value
+    } else if (adjustingAttr.value === 'border-style' ||
+        adjustingAttr.value === 'border-width' ||
+        adjustingAttr.value === 'border-color') {
+        const seperate = adjustingAttr.value.split('-')
+        attrName = seperate[0] + '-' + direction.value + '-' + seperate[1]
+    } else if (adjustingAttr.value === 'position-offset') {
+        attrName = direction.value
+    } else {
+        attrName = adjustingAttr.value
+    }
+    return attrName
+}
+
+let tipOpt = computed(() => {
+    let tipOpt = {
+        tipBottom: showDirection.value ? '86px' : '66px',
+        tipVal: 0,
+    }
+    return tipOpt
+})
 // 属性值修改
 function attrValChange(params) {
     let curEle = elementList.value.find(item => item.id === curElementId.value)
     if (params.methodName.indexOf('number') === -1) {
-        curEle.styleObject[adjustingAttr] = params.methodName
+        curEle.styleObject[getAttrName()] = params.methodName
         console.log(elementList.value)
     } else {
         const seperate = params.methodName.split('-')
-        curEle.styleObject[adjustingAttr] = '30' + seperate[1]
+        curEle.styleObject[getAttrName()] = '30' + seperate[1]
     }
 }
 
@@ -184,10 +253,22 @@ const wordDone = () => Toast('作品完成');
 .van-action-bar {
     z-index: 5;
 }
+.direction-picker {
+    padding: 8px 10px;
+    background-color: rgb(235 235 235, 50%);
+    position: fixed;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    z-index: 15;
+    display: flex;
+    justify-content: space-evenly;
+}
 .content {
     height: calc(100vh - 100px);
     // background-color: #d59797;
     border: 2px dashed #ccc;
+    overflow: hidden;
 }
 
 .popup-content {
