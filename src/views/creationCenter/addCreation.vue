@@ -229,20 +229,19 @@ function getAttrName() {
 
 let tipOpt = computed(() => {
     let tipOpt = {
-        tipBottom: showDirection.value ? '86px' : '66px',
-        tipVal: 0,
+        tipBottom: showDirection.value ? '86px' : '66px'
     }
     return tipOpt
 })
 // 属性值修改
 function attrValChange(params) {
     let curEle = elementList.value.find(item => item.id === curElementId.value)
-    if (params.methodName.indexOf('number') === -1) {
-        curEle.styleObject[getAttrName()] = params.methodName
+    if (params.attrVal.methodName.indexOf('number') === -1) {
+        curEle.styleObject[getAttrName()] = params.attrVal.methodName
         console.log(elementList.value)
     } else {
-        const seperate = params.methodName.split('-')
-        curEle.styleObject[getAttrName()] = '30' + seperate[1]
+        const seperate = params.attrVal.methodName.split('-')
+        curEle.styleObject[getAttrName()] = params.numVal + seperate[1]
     }
 }
 
@@ -269,6 +268,10 @@ const wordDone = () => Toast('作品完成');
     // background-color: #d59797;
     border: 2px dashed #ccc;
     overflow: hidden;
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 .popup-content {
