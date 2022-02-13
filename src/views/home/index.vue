@@ -59,7 +59,7 @@ const router = useRouter()
 function goBack() {
     router.go(-1)
     store.commit('popOldPageName')
-
+    store.commit('createEleIDClear') // 退出创作页组件编号回归1
 }
 function toCardList() {
     router.push({

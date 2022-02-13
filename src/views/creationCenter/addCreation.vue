@@ -17,13 +17,13 @@
             ></PanPicker>
         </div>
         <!-- 元素调整选项列表 -->
-        <van-action-sheet v-model:show="attrJustify" title="标题">
+        <van-action-sheet v-model:show="attrJustify" title="属性">
             <div class="popup-content">
                 <van-row>
-                    <van-col span="6" v-for="item in cardList" :key="item">
+                    <van-col span="8" v-for="item in cardList" :key="item">
                         <div
                             class="card-item"
-                            @click="getMethods(item.attr)"
+                            @click="item.state && getMethods(item.attr)"
                             :class="{ inactive: !item.state }"
                         >
                             <div class="card-icon">
@@ -86,7 +86,8 @@
                 @click="deleteElement"
                 :color="elementList.length && canOperate ? '#ee0a24' : '#ccc'"
             />
-            <van-action-bar-button type="success" text="完成" @click="workDone" />
+            <van-action-bar-button type="success" text="保存" @click="workDone" />
+            <van-action-bar-button color="#ff962a" text="发布" @click="workDespatch" />
         </van-action-bar>
     </div>
 </template>
@@ -100,19 +101,20 @@ import { useRouter } from 'vue-router'
 
 
 const store = useStore()
+store.commit('changeSubPageName', '新创作')
 
-function getAllCardsName() {
+function getActiveCardsName() {
     return store.state.activeCardList.map(item => item.attr)
 }
 
 const allCardList = getAllCardsData()
-const allCardsName = getAllCardsName()
+const activeCardsName = getActiveCardsName()
 // 获取目前可以使用的属性列表
 const cardList = computed(() => {
     const newList = []
     allCardList.forEach(card => {
         let cardCopy = JSON.parse(JSON.stringify(card))
-        cardCopy.state = allCardsName.indexOf(card.attr) > -1 ?
+        cardCopy.state = activeCardsName.indexOf(card.attr) > -1 ?
             true : false
         newList.push(cardCopy)
     });
@@ -178,18 +180,20 @@ function releaseCurEle() {
 
 // 元素删除
 function deleteElement() {
-    const curEle = deepFind(elementList.value, store.state.createActiveEleID, 0)
-    if (curEle.ele) {
-        if (curEle.fatherId === 0) {
-            elementList.value.splice(curEle.posi, 1)
-        } else {
-            const curFatherEle = deepFind(elementList.value, curEle.fatherId, 0)
-            curFatherEle.ele.children.splice(curEle.posi, 1)
+    if (elementList.value.length && canOperate.value) {
+        const curEle = deepFind(elementList.value, store.state.createActiveEleID, 0)
+        if (curEle.ele) {
+            if (curEle.fatherId === 0) {
+                elementList.value.splice(curEle.posi, 1)
+            } else {
+                const curFatherEle = deepFind(elementList.value, curEle.fatherId, 0)
+                curFatherEle.ele.children.splice(curEle.posi, 1)
+            }
         }
+        adjustingAttr.value = ''
+        // 清空当前选中标签
+        store.commit('clearCreateActiveEleID')
     }
-    adjustingAttr.value = ''
-    // 清空当前选中标签
-    store.commit('clearCreateActiveEleID')
 }
 
 // 元素属性修改
@@ -267,12 +271,18 @@ function deepFind(list, id, fatherId) {
 
 const router = useRouter()
 const workDone = () => {
-    alert('作品完成')
+    alert('保存成功')
     store.commit('createEleIDClear') // 编号归位
-    router.push({
-        name: 'Creation'
-    })
+    router.go(-1)
+    store.commit('popOldPageName')
 };
+const workDespatch = () => {
+    alert('作品发布')
+    store.commit('createEleIDClear') // 编号归位
+    router.go(-1)
+    store.commit('popOldPageName')
+};
+
 </script>
 
 <style scoped lang="less">
@@ -313,7 +323,7 @@ const workDone = () => {
         justify-content: center;
 
         &.inactive {
-            opacity: 0.4;
+            opacity: 0.3;
         }
 
         .card-icon {
@@ -338,5 +348,17 @@ const workDone = () => {
 :deep(.select-popup-content) {
     width: 100%;
     background: transparent;
+}
+
+:deep(.van-action-bar-icon) {
+    min-width: 60px;
+}
+:deep(.van-action-bar-button) {
+    border-radius: 999px;
+}
+
+:deep(.van-action-bar-button--first) {
+    margin-right: 5px;
+    margin-left: 10px;
 }
 </style>
