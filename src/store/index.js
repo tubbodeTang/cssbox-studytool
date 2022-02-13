@@ -12,6 +12,7 @@ const store = createStore({
             activeModule: '',
             // 被点亮的卡片对象列表，包括卡片的等级等信息
             activeCardList: [],
+            //—————————————创意模块—————————————
             // 创作元素编号
             createEleID: 1,
             // 创作时被选中的元素id

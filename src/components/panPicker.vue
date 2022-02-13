@@ -249,9 +249,9 @@ function getDeltaScroll(old, newV) {
     return Math.abs(old - newV)
 }
 
-onUnmounted(() => {
-    picker.value.removeEventListener("scroll")
-})
+// onUnmounted(() => {
+//     picker.value.removeEventListener("scroll")
+// })
 
 
 </script>
