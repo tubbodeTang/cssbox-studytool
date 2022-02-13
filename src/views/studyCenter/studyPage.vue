@@ -59,11 +59,7 @@ function nextPage() {
         process.value = 100
     }
 }
-// 使用 mutation
-let increment = () => store.commit('increment')
 
-
-let attrType = ref()
 let cardShow = ref(false)
 
 watch(process, (newVal) => {
