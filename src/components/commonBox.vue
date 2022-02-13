@@ -1,40 +1,38 @@
 <template>
     <div
         class="boxD"
-        :style="styleObject"
-        :class="{ active: isActive }"
-    >This is a commonBox:{{ index }}</div>
+        :style="boxItem.styleObject"
+        :class="{ active: store.state.createActiveEleID === boxItem.id }"
+    >
+        This is a commonBox:{{ boxItem.id }}
+        <CommonBox
+            v-for="(item) in boxItem.children"
+            :key="item"
+            :boxItem="item"
+            @click.stop="setCurEle(item.id)"
+        ></CommonBox>
+    </div>
 </template>
 
 <script setup>
 import { ref } from '@vue/reactivity';
+import { useStore } from 'vuex'
+const store = useStore()
 
 const props = defineProps({
-    styleObj: {
+    boxItem: {
         type: Object,
-        default: () => {
-            return {
-                width: '100px',
-                height: '100px',
-                backgroundColor: '#ccc'
-            }
-        }
-    },
-    isActive: {
-        type: Boolean,
-        default: () => {
-            return false
-        }
-    },
-    index: {
-        type: Number,
         default: () => {
             return null
         }
     }
 })
-const styleObject = ref(props.styleObj)
-console.log(props.styleObj)
+const boxItem = ref(props.boxItem)
+
+function setCurEle(params) {
+    store.commit('changeCreateActiveEleID', params)
+}
+
 </script>
 
 <style scoped lang="less">

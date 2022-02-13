@@ -11,7 +11,11 @@ const store = createStore({
             // 当前在学习的模块
             activeModule: '',
             // 被点亮的卡片对象列表，包括卡片的等级等信息
-            activeCardList: []
+            activeCardList: [],
+            // 创作元素编号
+            createEleID: 1,
+            // 创作时被选中的元素id
+            createActiveEleID: null
         }
     },
     mutations: {
@@ -58,7 +62,21 @@ const store = createStore({
         // 通过关卡学习，记录学习进度
         pushActiveCard(state, card) {
             state.activeCardList.push(card)
+        },
+        //—————————————创意模块—————————————
+        createEleIDPlus(state) {
+            state.createEleID = state.createEleID + 1
+        },
+        createEleIDClear(state) {
+            state.createEleID = 1
+        },
+        changeCreateActiveEleID(state, newId) {
+            state.createActiveEleID = newId
+        },
+        clearCreateActiveEleID(state) {
+            state.createActiveEleID = null
         }
+
     }
 })
 

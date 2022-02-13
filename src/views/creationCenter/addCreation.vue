@@ -5,12 +5,7 @@
             <CommonBox
                 v-for="(item) in elementList"
                 :key="item"
-                :index="item.id"
-                :items="elementList"
-                :styleObj="item.styleObject"
-                :isActive="curElementId === item.id"
-                @deleteIndex="del"
-                @uploadData="getData"
+                :boxItem="item"
                 @click.stop="setCurEle(item.id)"
             ></CommonBox>
             <!-- 纵向选择器  选择属性值（数值类:单位)或者（项目值） -->
@@ -91,7 +86,7 @@
                 @click="deleteElement"
                 :color="elementList.length && canOperate ? '#ee0a24' : '#ccc'"
             />
-            <van-action-bar-button type="success" text="完成" @click="wordDone" />
+            <van-action-bar-button type="success" text="完成" @click="workDone" />
         </van-action-bar>
     </div>
 </template>
@@ -99,9 +94,9 @@
 <script setup>
 import { getAllCardsData, getCardMethods } from '@/api/getCardsData';
 import PanPicker from '@/components/panPicker.vue'
-import CommonBox from '@/components/commonBox.vue'
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 
 const store = useStore()
@@ -127,7 +122,7 @@ const cardList = computed(() => {
 // 作品元素列表
 let elementList = ref([
     {
-        id: 1,
+        id: store.state.createEleID,
         styleObject: {
             display: 'block',
             borderWidth: '1px',
@@ -140,9 +135,9 @@ let elementList = ref([
 
 // 添加新的元素
 function addElement(params) {
-    let lastId = elementList.value.length ? elementList.value[elementList.value.length - 1].id + 1 : 1
+    store.commit('createEleIDPlus') // 编号加一
     const basicBox = {
-        id: lastId,
+        id: store.state.createEleID,
         styleObject: {
             display: 'block',
             borderWidth: '1px',
@@ -151,36 +146,50 @@ function addElement(params) {
         },
         children: []
     }
-    elementList.value.push(basicBox)
+    if (store.state.createActiveEleID) {
+        const curEle = deepFind(elementList.value, store.state.createActiveEleID, 0)
+        curEle.ele.children.push(basicBox)
+    } else {
+        elementList.value.push(basicBox)
+    }
 }
 
 // 选中当前元素
 let canOperate = computed(() => {
-    return curElementId.value ? true : false
+    return store.state.createActiveEleID ? true : false
 })
 
-let curElementId = ref(null)
 function setCurEle(id) {
-    curElementId.value = id
+    store.commit('changeCreateActiveEleID', id)
 }
 function cleanCurEle() {
     if (!showMethodPicker.value) {
         adjustingAttr.value = ''
-        curElementId.value = null // 清空当前选中标签？
+        // 清空当前选中标签？
+        store.commit('clearCreateActiveEleID')
     }
 }
 function releaseCurEle() {
     showMethodPicker.value = false
     adjustingAttr.value = ''
-    // curElementId.value = null // 清空当前选中标签？
+    // 清空当前选中标签？
+    // store.commit('clearCreateActiveEleID')
 }
 
 // 元素删除
 function deleteElement() {
-    const curElePosi = elementList.value.findIndex(item => item.id === curElementId.value)
-    curElePosi >= 0 && elementList.value.splice(curElePosi, 1)
+    const curEle = deepFind(elementList.value, store.state.createActiveEleID, 0)
+    if (curEle.ele) {
+        if (curEle.fatherId === 0) {
+            elementList.value.splice(curEle.posi, 1)
+        } else {
+            const curFatherEle = deepFind(elementList.value, curEle.fatherId, 0)
+            curFatherEle.ele.children.splice(curEle.posi, 1)
+        }
+    }
     adjustingAttr.value = ''
-    curElementId.value = null // 清空当前选中标签
+    // 清空当前选中标签
+    store.commit('clearCreateActiveEleID')
 }
 
 // 元素属性修改
@@ -235,17 +244,35 @@ let tipOpt = computed(() => {
 })
 // 属性值修改
 function attrValChange(params) {
-    let curEle = elementList.value.find(item => item.id === curElementId.value)
+    let curEle = deepFind(elementList.value, store.state.createActiveEleID, 0)
     if (params.attrVal.methodName.indexOf('number') === -1) {
-        curEle.styleObject[getAttrName()] = params.attrVal.methodName
+        curEle.ele.styleObject[getAttrName()] = params.attrVal.methodName
         console.log(elementList.value)
     } else {
         const seperate = params.attrVal.methodName.split('-')
-        curEle.styleObject[getAttrName()] = params.numVal + seperate[1]
+        curEle.ele.styleObject[getAttrName()] = params.numVal + seperate[1]
     }
 }
 
-const wordDone = () => Toast('作品完成');
+function deepFind(list, id, fatherId) {
+    for (let i = 0; i < list.length; i++) {
+        if (list[i].id === id) {
+            return { ele: list[i], fatherId: fatherId, posi: i }
+        } else if (list[i].children.length > 0) {
+            return deepFind(list[i].children, id, list[i].id)
+        }
+    }
+    return undefined
+}
+
+const router = useRouter()
+const workDone = () => {
+    alert('作品完成')
+    store.commit('createEleIDClear') // 编号归位
+    router.push({
+        name: 'Creation'
+    })
+};
 </script>
 
 <style scoped lang="less">
