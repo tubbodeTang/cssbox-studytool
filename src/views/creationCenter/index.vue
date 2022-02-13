@@ -28,6 +28,7 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 const myWorkList = [{
     workName: '测试1'
 }, {
@@ -35,12 +36,12 @@ const myWorkList = [{
 }]
 
 const router = useRouter()
+const store = useStore()
 function toAddPage() {
     router.push({
         name: 'AddCreation'
     })
-    // store.commit('saveLastPageName', '')
-    // store.commit('changeActiveModule', type)
+    store.commit('saveLastPageName', '创意区')
 }
 </script>
 

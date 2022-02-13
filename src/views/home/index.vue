@@ -2,7 +2,7 @@
     <van-nav-bar :title="pageTitle" safe-area-inset-top>
         <template #left>
             <van-icon name="arrow-left" v-if="showBackBtn" @click="goBack" />
-            <van-icon name="smile-o" @click="showPopup" />
+            <van-icon name="smile-o" @click="showPopup" v-if="isFirstPage" />
         </template>
         <template #right>
             <van-icon name="diamond" @click="toCardList" />
@@ -39,7 +39,7 @@
 
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 
 const store = useStore()
@@ -47,6 +47,13 @@ const store = useStore()
 // 在 computed 函数中访问 state
 let pageTitle = computed(() => store.state.pageTitle)
 let showBackBtn = computed(() => store.state.showBackBtn)
+const route = useRoute()
+let isFirstPage = computed(() => {
+    console.log(route.fullPath)
+    return route.fullPath === '/study/studyList' ||
+        route.fullPath === '/creationCenter/creation' ||
+        route.fullPath === '/discussCenter/discuss'
+})
 
 const router = useRouter()
 function goBack() {
