@@ -16,7 +16,9 @@ const store = createStore({
             // 创作元素编号
             createEleID: 1,
             // 创作时被选中的元素id
-            createActiveEleID: null
+            createActiveEleID: null,
+            //—————————————用户信息—————————————
+            userId: 'txb406'
         }
     },
     mutations: {
