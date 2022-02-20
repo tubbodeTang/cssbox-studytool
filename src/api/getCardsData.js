@@ -371,3 +371,8 @@ export function getCardMethods(attrName) {
     const card = cardsData.find(card => card.attr == attrName)
     return card.methods
 }
+
+// 获取所有属性名称
+export function getAllCardsName(){
+    return cardsData.map(item=>item.attr)
+}

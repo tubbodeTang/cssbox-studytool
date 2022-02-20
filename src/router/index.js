@@ -51,6 +51,11 @@ const router = createRouter({
             path: 'discuss',
             name: 'Discuss',
             component: () => import('@/views/discussCenter/discuss.vue')
+        },
+        {
+            path: 'topicDetail',
+            name: 'TopicDetail',
+            component: () => import('@/views/discussCenter/topicDetail.vue')
         }]
     }, {
         path: '/collectionCenter',

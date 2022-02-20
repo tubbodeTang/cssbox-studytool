@@ -12,6 +12,8 @@ const store = createStore({
             activeModule: '',
             // 被点亮的卡片对象列表，包括卡片的等级等信息
             activeCardList: [],
+            //—————————————讨论模块—————————————
+            selectedTopic: null,
             //—————————————创意模块—————————————
             // 创作元素编号
             createEleID: 1,
@@ -65,6 +67,10 @@ const store = createStore({
         // 通过关卡学习，记录学习进度
         pushActiveCard(state, card) {
             state.activeCardList.push(card)
+        },
+        //—————————————讨论模块—————————————
+        selectTopic(state, topic) {
+            state.selectedTopic = topic
         },
         //—————————————创意模块—————————————
         createEleIDPlus(state) {
