@@ -1,5 +1,31 @@
 <template>
     <div>
+        <van-notice-bar
+            mode="closeable"
+            left-icon="volume-o"
+            :scrollable="true"
+            @click="toTimeLimit"
+            @close.stop
+        >
+            <template #left-icon>
+                <van-icon name="bullhorn-o" />
+                <van-count-down class="my-count-down" :time="time" format="HH:mm:ss:SS">
+                    <template #default="timeData">
+                        <span class="block">{{ timeData.hours }}</span>
+                        <span class="colon">:</span>
+                        <span class="block">{{ timeData.minutes }}</span>
+                        <span class="colon">:</span>
+                        <span class="block">{{ timeData.seconds }}</span>
+                    </template>
+                </van-count-down>
+                <span>限时挑战：</span>
+            </template>
+            <template #default>
+                明月直入，无心可猜。
+                仙人抚我顶，结发受长生。
+                今人不见古时月，今月曾经照古人。
+            </template>
+        </van-notice-bar>
         <van-tabs v-model:active="active" @click-tab="onClickTab">
             <van-tab title="世界">
                 <div class="world-list">
@@ -66,6 +92,9 @@ import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { getWorldListData, getMyWorkListData } from '@/api/getWorksData.js'
 import { ref } from 'vue'
+
+const time = ref(30 * 60 * 60 * 1000);
+
 const myWorkList = ref(getMyWorkListData())
 const worldListSrc = getWorldListData()
 const worldList = ref(worldListSrc.map(item => {
@@ -78,6 +107,12 @@ const store = useStore()
 function toAddPage() {
     router.push({
         name: 'AddCreation'
+    })
+    store.commit('saveLastPageName', '创意区')
+}
+function toTimeLimit() {
+    router.push({
+        name: 'CreationCompete'
     })
     store.commit('saveLastPageName', '创意区')
 }
@@ -97,6 +132,27 @@ function toggleZan(item) {
 </script>
 
 <style scoped lang="less">
+.my-count-down {
+    margin: 0 5px;
+    .colon {
+        display: inline-block;
+        // margin: 0 2px;
+        color: #ee0a24;
+    }
+    .block {
+        display: inline-block;
+        width: 15px;
+        color: #ee0a24;
+        font-size: 12px;
+        text-align: center;
+        // background-color: #ee0a24;
+    }
+}
+
+.notice-swipe {
+    height: 40px;
+    line-height: 40px;
+}
 :deep(.van-col.van-col--12) {
     margin-bottom: 16px;
     &:nth-child(even) {
@@ -112,7 +168,7 @@ function toggleZan(item) {
 }
 .world-list,
 .my-list {
-    height: calc(100vh - 156px);
+    height: calc(100vh - 156px - 40px);
     padding-top: 16px;
     overflow: auto;
 }

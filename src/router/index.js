@@ -33,45 +33,52 @@ const router = createRouter({
         redirect: '/creationCenter/creation',
         component: () => import('@/views/home/index.vue'),
         children: [{
-            path: 'creation',
-            name: 'Creation',
-            component: () => import('@/views/creationCenter/index.vue')
-        },
-        {
-            path: 'addCreation',
-            name: 'AddCreation',
-            component: () => import('@/views/creationCenter/addCreation.vue')
-        }]
-    },{
+                path: 'creation',
+                name: 'Creation',
+                component: () => import('@/views/creationCenter/index.vue')
+            },
+            {
+                path: 'addCreation',
+                name: 'AddCreation',
+                component: () => import('@/views/creationCenter/addCreation.vue')
+            }, {
+                path: 'creationCompete',
+                name: 'CreationCompete',
+                component: () => import('@/views/creationCenter/creationCompete.vue')
+            }
+        ]
+    }, {
         path: '/discussCenter',
         name: 'DiscussCenter',
         redirect: '/discussCenter/discuss',
         component: () => import('@/views/home/index.vue'),
         children: [{
-            path: 'discuss',
-            name: 'Discuss',
-            component: () => import('@/views/discussCenter/discuss.vue')
-        },
-        {
-            path: 'topicDetail',
-            name: 'TopicDetail',
-            component: () => import('@/views/discussCenter/topicDetail.vue')
-        }]
+                path: 'discuss',
+                name: 'Discuss',
+                component: () => import('@/views/discussCenter/discuss.vue')
+            },
+            {
+                path: 'topicDetail',
+                name: 'TopicDetail',
+                component: () => import('@/views/discussCenter/topicDetail.vue')
+            }
+        ]
     }, {
         path: '/collectionCenter',
         name: 'CollectionCenter',
         redirect: '/collectionCenter/cardList',
         component: () => import('@/views/home/index.vue'),
         children: [{
-            path: 'cardList',
-            name: 'CardList',
-            component: () => import('@/views/collectionCenter/index.vue')
-        },
-        {
-            path: 'cardPage',
-            name: 'CardPage',
-            component: () => import('@/views/collectionCenter/cardPage.vue')
-        }]
+                path: 'cardList',
+                name: 'CardList',
+                component: () => import('@/views/collectionCenter/index.vue')
+            },
+            {
+                path: 'cardPage',
+                name: 'CardPage',
+                component: () => import('@/views/collectionCenter/cardPage.vue')
+            }
+        ]
     }]
 })
 
