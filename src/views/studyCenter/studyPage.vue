@@ -12,18 +12,21 @@
 
         <div v-else class="finish">完成章节学习</div>
 
-        <transition name="van-slide-up">
-            <van-popup
-                v-model:show="cardShow"
-                round
-                :style="{
-                    height: '60%',
-                    width: 'calc(100vw - 60px)'
-                }"
-            >
-                <card :attr-name="lessonData.targetAttr"></card>
-            </van-popup>
-        </transition>
+        <van-popup
+            v-model:show="cardShow"
+            round
+            :style="{
+                height: '100%',
+                width: '100vw',
+                borderRadius: 0
+            }"
+        >
+            <div id="test" ref="flyItem" class="fly-item">
+                <div ref="flyItem2" class="fly-item2">
+                    <card :attr-name="lessonData.targetAttr" @saved="collectAnimate"></card>
+                </div>
+            </div>
+        </van-popup>
     </div>
 </template>
 
@@ -61,6 +64,35 @@ function nextPage() {
 }
 
 let cardShow = ref(false)
+let flyItem = ref(null)
+let flyItem2 = ref(null)
+function collectAnimate() {
+    console.log(flyItem.value)
+    // 现在卡片距离右上角的距离
+    let flyItemBound = flyItem.value.getBoundingClientRect();
+    // 卡片中心点距右上角的水平垂直距离
+    var offsetX = flyItemBound.left + flyItemBound.width / 2 + 100;
+    var offsetY = -(flyItemBound.top + flyItemBound.height / 2 + 600);
+    let isRunning = false;
+    if (isRunning == false) {
+        // 购物车图形出现与初始定位
+        flyItem.value.style.display = 'block';
+        flyItem.value.style.left = (flyItemBound.left + flyItem.value.clientWidth / 2) + 'px';
+        flyItem.value.style.top = (flyItemBound.top + flyItem.value.clientHeight / 2) + 'px';
+        // 开始动画
+        flyItem.value.style.transform = ' scale(0.5) translateX(' + offsetX + 'px)';
+        flyItem2.value.style.transform = ' scale(0.5) translateY(' + offsetY + 'px)';
+        // 动画标志量
+        isRunning = true;
+        setTimeout(() => {
+            flyItem.value.style.display = 'none';
+            flyItem.value.style.transform = 'translateX(0)';
+            flyItem2.value.style.transform = 'translateY(0)';
+            isRunning = false;
+            cardShow.value=false
+        }, 490);
+    }
+}
 
 watch(process, (newVal) => {
     if (newVal === 100) {
@@ -72,8 +104,24 @@ watch(process, (newVal) => {
 </script>
 
 <style lang="less" scoped>
-/* 应用动画的元素 */
 :deep(.van-popup) {
     background-color: transparent;
+}
+
+.fly-item,
+.fly-item > .fly-item2 {
+    // position: absolute;
+    // width: 50px;
+    // height: 100%;
+    transition: transform 0.5s;
+}
+
+.fly-item {
+    // display: none;
+    transition-timing-function: linear;
+}
+
+.fly-item > .fly-item2 {
+    transition-timing-function: cubic-bezier(0.55, 0, 0.85, 0.36);
 }
 </style>

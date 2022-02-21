@@ -44,14 +44,16 @@ const cardInfo = getLessonRelateCard(props.attrName)
 console.log(cardInfo)
 
 const store = useStore()
+const emit = defineEmits(['saved'])
 function saveCard() {
-    const cardRank=countCardProgress(cardInfo,store.state.activeCardList)
-    if(cardRank>0){
-        store.commit('updateCardProgress',{card:cardInfo,cardRank:cardRank+1})
-    }else{
-        cardInfo.curRankNum=1 // 从一级开始记录
-        store.commit('pushActiveCard',cardInfo)
+    const cardRank = countCardProgress(cardInfo, store.state.activeCardList)
+    if (cardRank > 0) {
+        store.commit('updateCardProgress', { card: cardInfo, cardRank: cardRank + 1 })
+    } else {
+        cardInfo.curRankNum = 1 // 从一级开始记录
+        store.commit('pushActiveCard', cardInfo)
     }
+    emit('saved')
 }
 </script>
 
@@ -60,7 +62,13 @@ function saveCard() {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 10px;
-    height: 100%;
+    // height: 100%;
+    height: 60vh;
+    width: calc(100vw - 60px);
+    position: relative;
+    top: calc((40vh) / 2);
+    left: 30px;
+
     padding: 0 15px;
     display: flex;
     text-align: center;
