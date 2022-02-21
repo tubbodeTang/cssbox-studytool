@@ -30,8 +30,8 @@
     </div>
     <van-tabbar route safe-area-inset-bottom @change="onChange">
         <van-tabbar-item replace to="/study" icon="home-o" name="学习中心">学习中心</van-tabbar-item>
+        <van-tabbar-item replace to="/creationCenter" icon="flower-o" name="创意区">创意区</van-tabbar-item>
         <van-tabbar-item replace to="/discussCenter" icon="friends-o" name="讨论区" badge="5">讨论区</van-tabbar-item>
-        <van-tabbar-item replace to="/creationCenter" icon="search" name="创意区">创意区</van-tabbar-item>
     </van-tabbar>
 </template>
 
