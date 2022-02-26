@@ -10,6 +10,8 @@ const store = createStore({
             showBackBtn: false,
             // 当前在学习的模块
             activeModule: '',
+            // 当前在学习的课程
+            activeLesson: '',
             // 被点亮的卡片对象列表，包括卡片的等级等信息
             activeCardList: [],
             //—————————————讨论模块—————————————
@@ -58,6 +60,10 @@ const store = createStore({
         // 当前在学习的模块
         changeActiveModule(state, moduleName) {
             state.activeModule = moduleName
+        },
+        // 当前在学习的课程
+        changeActiveLesson(state, lessonName) {
+            state.activeLesson = lessonName
         },
         // 通过关卡学习，记录学习进度
         updateCardProgress(state, newCard) {

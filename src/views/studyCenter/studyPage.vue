@@ -13,6 +13,7 @@
         <div v-else class="finish">完成章节学习</div>
 
         <van-popup
+            v-if="lessonData.targetAttr || lessonData.targetAttrVal"
             v-model:show="cardShow"
             round
             :style="{
@@ -42,8 +43,9 @@ const store = useStore()
 
 // 在 computed 函数中访问 state
 let activeModule = computed(() => store.state.activeModule)
-console.log(activeModule.value)
-const lessonData = getLessonData(activeModule.value)
+let activeLesson = computed(() => store.state.activeLesson)
+console.log(activeLesson.value)
+const lessonData = getLessonData(activeModule.value, activeLesson.value)
 const lessonContent = lessonData.lessonContent
 console.log(lessonContent)
 let lessonPage = ref(0)
@@ -89,7 +91,7 @@ function collectAnimate() {
             flyItem.value.style.transform = 'translateX(0)';
             flyItem2.value.style.transform = 'translateY(0)';
             isRunning = false;
-            cardShow.value=false
+            cardShow.value = false
         }, 490);
     }
 }
