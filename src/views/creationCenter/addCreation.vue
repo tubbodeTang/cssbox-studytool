@@ -20,14 +20,14 @@
         <van-action-sheet v-model:show="attrJustify" title="属性">
             <div class="popup-content">
                 <van-row>
-                    <van-col span="8" v-for="item in cardList" :key="item">
+                    <van-col span="12" v-for="item in cardList" :key="item">
                         <div
                             class="card-item"
                             @click="item.state && getMethods(item.attr)"
                             :class="{ inactive: !item.state }"
                         >
                             <div class="card-icon">
-                                <img :src="'/src/assets/logo.png'" />
+                                <img :src="'/src/assets/attrIcon/'+item.attr+'.png'" />
                             </div>
                             <p class="card-name">{{ item.name }}</p>
                         </div>
@@ -315,7 +315,7 @@ const workDespatch = () => {
     padding: 16px 16px 160px;
 
     .card-item {
-        height: 100px;
+        height: 150px;
         padding: 0 15px;
         display: flex;
         text-align: center;
@@ -331,8 +331,8 @@ const workDespatch = () => {
             text-align: center;
             justify-content: space-around;
             img {
-                height: 40px;
-                width: 40px;
+                height: 100px;
+                width: 100px;
             }
         }
         .card-name {

@@ -1,7 +1,7 @@
  <template>
     <div class="card-base">
         <div class="card-icon">
-            <img :src="'/src/assets/logo.png'" />
+            <img :src="'/src/assets/attrIcon/'+cardInfo.attr+'.png'" />
         </div>
         <div>
             <!-- 属性名 -->
@@ -55,8 +55,8 @@ const activeNames = ref([0, 1, 2]);
         justify-content: space-around;
         padding: 20px;
         img {
-            height: 60px;
-            width: 60px;
+            height: 120px;
+            width: 120px;
         }
     }
 
