@@ -9,7 +9,6 @@
         </template>
     </van-nav-bar>
     <div class="container">
-        <!-- <StudyListVue></StudyListVue> -->
         <router-view></router-view>
 
         <van-popup

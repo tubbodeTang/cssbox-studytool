@@ -14,7 +14,6 @@ const props = defineProps({
     }
 })
 const styleObject = ref(props.styleObj)
-console.log(props.styleObj)
 </script>
 
 <style scoped>
