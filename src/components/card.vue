@@ -2,7 +2,7 @@
     <div class="card">
         <div>
             <div class="card-icon">
-                <img :src="'/src/assets/logo.png'" />
+                <img :src="'/src/assets/attrIcon/'+cardInfo.attr+'.png'" />
             </div>
             <!-- 属性名 -->
             <p class="card-name">{{ attrName }}</p>
@@ -46,6 +46,7 @@ console.log(cardInfo)
 const store = useStore()
 const emit = defineEmits(['saved'])
 function saveCard() {
+    //TODO：不一定是card积累，有可能是技能积累
     const cardRank = countCardProgress(cardInfo, store.state.activeCardList)
     if (cardRank > 0) {
         store.commit('updateCardProgress', { card: cardInfo, cardRank: cardRank + 1 })
