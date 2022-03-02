@@ -1,16 +1,16 @@
 const competeList = [{
     id: 1,
-    competeName: '测试1测试1测试1',
-    content: '测试1测试1测试1测试1测试1测试1测试1测试1测试1',
+    competeName: '城市高楼',
+    content: '比比谁的城市更繁华？',
     imgSrc: '',
     joinNum: Math.floor(Math.random() * 10),
 }, {
     id: 2,
-    competeName: '测试2测试2测试2',
-    content: '测试1测试1测试1测试1测试1测试1测试1测试1测试1',
+    competeName: '月夜',
+    content: '在月色迷人的夜晚，你能想象到什么样的场景？',
     imgSrc: '',
     joinNum: Math.floor(Math.random() * 10),
-}]
+}, ]
 
 
 // 随机获取竞赛例子数据
