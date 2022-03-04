@@ -2,6 +2,11 @@ import {
     createStore
 } from 'vuex'
 
+import {
+    mydraftList,
+    worldList
+} from '@/api/getWorksData.js'
+
 const store = createStore({
     state() {
         return {
@@ -17,6 +22,10 @@ const store = createStore({
             //—————————————讨论模块—————————————
             selectedTopic: null,
             //—————————————创意模块—————————————
+            // 创意模块列表
+            worldList: worldList,
+            // 我的创意列表
+            mydraftList: mydraftList,
             // 创作元素编号
             createEleID: 1,
             // 创作时被选中的元素id
@@ -79,6 +88,14 @@ const store = createStore({
             state.selectedTopic = topic
         },
         //—————————————创意模块—————————————
+        saveList(state, newItem) {
+            state.mydraftList.push({
+                id: 2,
+                workName: '测试2',
+                likeNum: 0,
+                img: newItem
+            })
+        },
         createEleIDPlus(state) {
             state.createEleID = state.createEleID + 1
         },

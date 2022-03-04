@@ -1,42 +1,42 @@
-const mydraftList = [{
+export let mydraftList = [{
     id: 1,
     workName: '测试1',
     likeNum: 0,
-    img: ''
+    img: '@/assets/demoImg/1.png'
 }, {
     id: 2,
     workName: '测试2',
     likeNum: 0,
-    img: ''
+    img: '@/assets/demoImg/2.png'
 }]
 
 
-const worldList = [{
+export let worldList = [{
     id: 3,
     workName: '测试1测试1测试1',
     userId: 'txb406',
     myLike: false,
     likeNum: 0,
-    img: ''
+    img: '@/assets/demoImg/1.png'
 }, {
     id: 4,
     workName: '测试2',
     userId: 'txb406',
     likeNum: 0,
-    img: ''
+    img: '@/assets/demoImg/2.png'
 }, {
     id: 5,
     workName: '测试1',
     userId: 'txbdev',
     myLike: false,
     likeNum: 0,
-    img: ''
+    img: '@/assets/demoImg/3.png'
 }, {
     id: 6,
     workName: '测试2',
     userId: 'txbdev',
     likeNum: 12,
-    img: ''
+    img: '@/assets/demoImg/4.png'
 }]
 
 import store from '@/store/index.js'

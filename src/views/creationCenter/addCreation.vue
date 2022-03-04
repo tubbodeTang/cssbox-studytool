@@ -2,12 +2,15 @@
     <div>
         <!-- 创作区域 -->
         <div class="content" @click.self="cleanCurEle">
-            <CommonBox
-                v-for="(item) in elementList"
-                :key="item"
-                :boxItem="item"
-                @click.stop="setCurEle(item.id)"
-            ></CommonBox>
+            <div ref="paint" class="paint">
+                <CommonBox
+                    v-for="(item) in elementList"
+                    :key="item"
+                    :boxItem="item"
+                    @click.stop="setCurEle(item.id)"
+                ></CommonBox>
+            </div>
+
             <!-- 纵向选择器  选择属性值（数值类:单位)或者（项目值） -->
             <PanPicker
                 :listSrc="columns"
@@ -117,6 +120,7 @@ import { getAllCardsData, getCardMethods } from '@/api/getCardsData';
 import PanPicker from '@/components/panPicker.vue'
 import ColorPicker from '@/components/colorPicker.vue'
 import { TinyColor } from '@ctrl/tinycolor';
+import { GeneratePicture } from '@/utils/html2img.js'
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
@@ -364,11 +368,32 @@ function deepFind(list, id, fatherId) {
 }
 
 const router = useRouter()
+let paint = ref(null)
 const workDone = () => {
-    alert('保存成功')
-    store.commit('createEleIDClear') // 编号归位
-    router.go(-1)
-    store.commit('popOldPageName')
+    GeneratePicture(paint.value).then(function (canvas) {
+        debugger
+        let c = canvas.toDataURL('image/png')
+        console.log(c)
+        // console.log(canvas);
+        // let imgUrl = canvas.toDataURL("image/png");
+        // var tempLink = document.createElement('a'); // 创建一个a标签
+        // tempLink.style.display = 'none';
+        // tempLink.href = imgUrl;
+        // tempLink.setAttribute('download', id); // 给a标签添加下载属性
+        // if (typeof tempLink.download === 'undefined') {
+        //     tempLink.setAttribute('target', '_blank');
+        // }
+        // document.body.appendChild(tempLink); // 将a标签添加到body当中
+        // tempLink.click(); // 启动下载
+        // document.body.removeChild(tempLink); // 下载完毕删除a标签
+        // window.URL.revokeObjectURL(imgUrl);
+        store.commit('saveList', c)
+        alert('保存成功')
+        store.commit('createEleIDClear') // 编号归位
+        router.go(-1)
+        store.commit('popOldPageName')
+    });
+
 };
 const workDespatch = () => {
     alert('作品发布')
@@ -472,6 +497,9 @@ const workDespatch = () => {
     top: 0;
     left: 0;
     right: 0;
+    .paint {
+        height: 100%;
+    }
 }
 
 .popup-content {

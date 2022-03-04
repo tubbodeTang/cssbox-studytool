@@ -68,7 +68,7 @@
                         <van-col span="12" v-for="item in myWorkList" :key="item">
                             <div class="work-item">
                                 <div class="work-icon">
-                                    <img :src="'/src/assets/logo.png'" />
+                                    <img :src="item.img" />
                                 </div>
                                 <!-- 作品名 -->
                                 <p class="work-name">
