@@ -37,7 +37,7 @@
                                 :class="{ 'my-work': item.userId === store.state.userId }"
                             >
                                 <div class="work-icon">
-                                    <img :src="'/src/assets/logo.png'" />
+                                    <img :src="item.img" />
                                 </div>
                                 <!-- 作品名 -->
                                 <p class="work-name">

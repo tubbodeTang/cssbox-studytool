@@ -2,12 +2,12 @@ export let mydraftList = [{
     id: 1,
     workName: '测试1',
     likeNum: 0,
-    img: '@/assets/demoImg/1.png'
+    img: '/src/assets/demoImg/3-1.png'
 }, {
     id: 2,
     workName: '测试2',
     likeNum: 0,
-    img: '@/assets/demoImg/2.png'
+    img: '/src/assets/demoImg/3-2.png'
 }]
 
 
@@ -17,26 +17,26 @@ export let worldList = [{
     userId: 'txb406',
     myLike: false,
     likeNum: 0,
-    img: '@/assets/demoImg/1.png'
+    img: '/src/assets/demoImg/3-1.png'
 }, {
     id: 4,
     workName: '测试2',
     userId: 'txb406',
     likeNum: 0,
-    img: '@/assets/demoImg/2.png'
+    img: '/src/assets/demoImg/3-2.png'
 }, {
     id: 5,
     workName: '测试1',
     userId: 'txbdev',
     myLike: false,
     likeNum: 0,
-    img: '@/assets/demoImg/3.png'
+    img: '/src/assets/demoImg/3-3.png'
 }, {
     id: 6,
     workName: '测试2',
     userId: 'txbdev',
     likeNum: 12,
-    img: '@/assets/demoImg/4.png'
+    img: '/src/assets/demoImg/3-4.png'
 }]
 
 import store from '@/store/index.js'
