@@ -9,7 +9,7 @@
                 <span
                     class="js-scroll fade-in"
                     :style="{ animationDuration: `${index / 2}s` }"
-                    v-for="(item,index) in text"
+                    v-for="(item, index) in text"
                     :ref="el => { if (el) texts.push(el) }"
                     :key="item"
                 >
@@ -22,6 +22,7 @@
                     v-for="lesson in getLessonList('flow')"
                     :key="lesson"
                     :title="lesson.title"
+                    :class="{ active: lesson.canLearn }"
                 />
             </van-list>
         </div>
@@ -44,7 +45,12 @@
                     v-for="lesson in getLessonList('box_block')"
                     :key="lesson"
                     :title="lesson.title"
-                />
+                    :class="{ active: lesson.canLearn }"
+                >
+                    <template #right-icon>
+                        <van-icon name="lock" class="lock-icon" />
+                    </template>
+                </van-cell>
             </van-list>
         </div>
         <div class="module inlineModule">
@@ -65,13 +71,26 @@
                     v-for="lesson in getLessonList('box_inline')"
                     :key="lesson"
                     :title="lesson.title"
-                />
+                    :class="{ active: lesson.canLearn }"
+                >
+                    <template #right-icon>
+                        <van-icon name="lock" class="lock-icon" />
+                    </template>
+                </van-cell>
             </van-list>
         </div>
         <div class="module inlineboxModule" @click="toListPage('box_inline_block')">
             <p>行内块级排列</p>
-            <div class="show-stage"></div>
-            <InlineBlock :styleObj="styleObjectIB"></InlineBlock>
+            <div class="show-stage">
+                <span
+                    class="js-scroll slide-right"
+                    v-for="item in 4"
+                    :ref="el => { if (el) inlines.push(el) }"
+                    :key="item"
+                >
+                    <InlineBlock :styleObj="styleObjectIB"></InlineBlock>
+                </span>
+            </div>
         </div>
         <div class="module breakFlowModule">
             <p>浮动</p>
@@ -164,7 +183,7 @@ function toLearnPage(module, lessonName) {
 }
 
 
-const text = '你注意到文字排布的方向了吗？'
+const text = '你注意到文字排布的方向了吗？和写字的方向是一样的。'
 
 const texts = ref([])
 const blocks = ref([])
@@ -247,15 +266,27 @@ onMounted(() => {
     margin: 16px;
     p {
         margin-top: 0;
+        font-weight: bold;
+    }
+    .show-stage {
+        border: 1px solid #efefef;
+        padding: 5px;
+        min-height: 100px;
+    }
+    .lesson-list {
+        margin-top: 16px;
+        .van-cell {
+            padding: 10px 0;
+            color: #ccc;
+            &.active {
+                color: #333;
+            }
+            // .lock-icon {
+            // }
+        }
     }
 }
 
-.lesson-list {
-    margin-top: 16px;
-    .van-cell {
-        padding: 10px 0;
-    }
-}
 .flowModule {
 }
 .boxModule {

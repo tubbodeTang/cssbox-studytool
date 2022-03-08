@@ -216,7 +216,7 @@ function toggleZan(item) {
 }
 
 .add-btn {
-    height: 240px;
+    height: 252px;
     border: 1px dashed #ccc;
     font-size: 64px;
     color: #ccc;

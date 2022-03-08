@@ -6,7 +6,7 @@
             <div class="description">{{ curContent.content }}</div>
             <div class="imageContainer"></div>
             <div class="next">
-                <button @click="nextPage">下一节</button>
+                <van-button class="btn" round type="primary" @click="nextPage">下一节</van-button>
             </div>
         </div>
 
@@ -106,6 +106,29 @@ watch(process, (newVal) => {
 </script>
 
 <style lang="less" scoped>
+
+.content{
+    height: calc(100vh - 100px - 30px);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .description{
+        min-height: 30%;
+
+    }
+    .imageContainer{
+        min-height: 30%;
+    }
+    .next{
+        text-align: center;
+        .btn{
+            width:100px;
+            height:100px;
+            border-radius: 50%;
+        }
+    }
+}
 :deep(.van-popup) {
     background-color: transparent;
 }

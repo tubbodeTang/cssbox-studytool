@@ -2,10 +2,10 @@
     <van-nav-bar :title="pageTitle" safe-area-inset-top>
         <template #left>
             <van-icon name="arrow-left" v-if="showBackBtn" @click="goBack" />
-            <van-icon name="smile-o" @click="showPopup" v-if="isFirstPage" />
+            <van-icon class="big-icon" name="smile-o" @click="showPopup" v-if="isFirstPage" />
         </template>
         <template #right>
-            <van-icon name="diamond" @click="toCardList" />
+            <van-icon class="big-icon yellow" name="diamond" @click="toCardList" />
         </template>
     </van-nav-bar>
     <div class="container">
@@ -16,14 +16,28 @@
             position="left"
             :style="{
                 height: '100%',
-                width: '100px'
+                width: '150px'
             }"
-            :close-on-click-overlay="true"
+            @click-overlay="closeSideBar"
         >
+            <div class="user-info">
+                <div class="avatar">
+                    <span v-html="avatar"></span>
+                </div>
+                <div class="user-name">txb406</div>
+                <div class="achieve"></div>
+            </div>
             <van-sidebar v-model="active">
-                <van-sidebar-item title="标签名称" dot />
-                <van-sidebar-item title="标签名称" badge="5" />
-                <van-sidebar-item title="标签名称" badge="20" />
+                <div class="group">
+                    <van-sidebar-item title="数据统计" dot />
+                    <van-sidebar-item title="新消息" badge="5" />
+                    <van-sidebar-item title="内容收藏" />
+                </div>
+                <div class="group">
+                    <van-sidebar-item title="重置学习记录" />
+                    <van-sidebar-item title="学习提醒" />
+                    <van-sidebar-item title="夜间模式" />
+                </div>
             </van-sidebar>
         </van-popup>
     </div>
@@ -39,7 +53,9 @@
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
+import multiavatar from '@multiavatar/multiavatar/esm' // 自动生成头像
 
+let avatar = ref(multiavatar('txb406'))
 
 const store = useStore()
 
@@ -67,6 +83,9 @@ function toCardList() {
     store.commit('changePageName', "收集页")
 }
 const onChange = (index) => store.commit('changePageName', index);
+const closeSideBar = (index) => {
+    show.value = false;
+};
 
 const show = ref(false);
 const showPopup = () => {
@@ -75,7 +94,40 @@ const showPopup = () => {
 </script>
 
 <style lang="less">
+.big-icon {
+    font-size: 20px !important;
+    &.yellow {
+        color: #c09918;
+    }
+}
 .container {
     height: calc(100vh - 96px);
+
+    .user-info {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        margin-top: 20px;
+        .avatar {
+            span {
+                width: 100px;
+                height: 100px;
+                display: inline-block;
+            }
+        }
+        .achieve {
+            margin: 10px;
+            border-bottom: 1px solid #efefef;
+        }
+        .achieve {
+        }
+    }
+    .van-sidebar {
+        margin-top: 10px;
+        width: 100%;
+        .group {
+            margin-bottom: 20px;
+        }
+    }
 }
 </style>
