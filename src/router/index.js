@@ -79,6 +79,17 @@ const router = createRouter({
                 component: () => import('@/views/collectionCenter/cardPage.vue')
             }
         ]
+    }, {
+        path: '/statisticCenter',
+        name: 'StatisticCenter',
+        redirect: '/statisticCenter/statistic',
+        component: () => import('@/views/home/index.vue'),
+        children: [{
+                path: 'statistic',
+                name: 'Statistic',
+                component: () => import('@/views/statisticCenter/statistic.vue')
+            }
+        ]
     }]
 })
 
