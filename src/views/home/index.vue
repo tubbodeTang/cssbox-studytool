@@ -29,7 +29,7 @@
             </div>
             <van-sidebar v-model="active">
                 <div class="group">
-                    <van-sidebar-item title="数据统计" dot />
+                    <van-sidebar-item title="数据统计" dot @click="goStatistic"/>
                     <van-sidebar-item title="新消息" badge="5" />
                     <van-sidebar-item title="内容收藏" />
                 </div>
@@ -82,6 +82,15 @@ function toCardList() {
     })
     store.commit('changePageName', "收集页")
 }
+
+function goStatistic(){
+    show.value = false;
+     router.push({
+        name: 'Statistic'
+    })
+    store.commit('changePageName', "学习统计")
+}
+
 const onChange = (index) => store.commit('changePageName', index);
 const closeSideBar = (index) => {
     show.value = false;
