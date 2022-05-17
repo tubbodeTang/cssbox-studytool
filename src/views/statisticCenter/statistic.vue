@@ -151,7 +151,7 @@ const onLoad = () => {
 
 .container {
     padding: 16px;
-    background: #fefefe;
+    background: #f7f7f7;
 
     .nav-name {
         color: #454545;

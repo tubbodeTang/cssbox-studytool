@@ -1,14 +1,8 @@
 <template>
     <div>
-        <van-notice-bar
-            mode="closeable"
-            left-icon="volume-o"
-            :scrollable="true"
-            @click="toTimeLimit"
-            @close.stop
-        >
+        <van-notice-bar mode="closeable" left-icon="volume-o" :scrollable="true" @click="toTimeLimit" @close.stop>
             <template #left-icon>
-                <van-icon name="bullhorn-o" />
+                <van-icon name="bullhorn-o" class="louder-icon" />
                 <van-count-down class="my-count-down" :time="time" format="HH:mm:ss:SS">
                     <template #default="timeData">
                         <span class="block">{{ timeData.hours }}</span>
@@ -26,16 +20,13 @@
                 今人不见古时月，今月曾经照古人。
             </template>
         </van-notice-bar>
-        <van-tabs v-model:active="active" @click-tab="onClickTab">
+        <van-tabs v-model:active="active" @click-tab="onClickTab" :color="'orange'">
             <van-tab title="世界">
                 <div class="world-list">
                     <van-row>
                         <!-- 列表 -->
                         <van-col span="12" v-for="item in worldList" :key="item">
-                            <div
-                                class="work-item"
-                                :class="{ 'my-work': item.userId === store.state.userId }"
-                            >
+                            <div class="work-item" :class="{ 'my-work': item.userId === store.state.userId }">
                                 <div class="work-icon">
                                     <img :src="item.img" />
                                 </div>
@@ -44,11 +35,8 @@
                                     <span class="name">{{ item.workName }}</span>
                                     <span class="zan">
                                         <!-- <van-icon name="like" v-if="item.myLike" :color="'red'" /> -->
-                                        <span
-                                            class="heart"
-                                            @click="toggleZan(item)"
-                                            :class="{ 'is-active': item.showTransaction, 'choosen': item.myLike }"
-                                        ></span>
+                                        <span class="heart" @click="toggleZan(item)"
+                                            :class="{ 'is-active': item.showTransaction, 'choosen': item.myLike }"></span>
                                         <span>{{ item.likeNum }}</span>
                                     </span>
                                 </p>
@@ -132,17 +120,28 @@ function toggleZan(item) {
 </script>
 
 <style scoped lang="less">
+.louder-icon {
+    font-size: 18px;
+}
+
 .my-count-down {
     margin: 0 5px;
+    font-size: 18px;
+    padding: 0 5px;
+    line-height: 22px;
+    background: orange;
+    border-radius: 10px;
+
     .colon {
         display: inline-block;
         // margin: 0 2px;
-        color: #ee0a24;
+        color: white;
     }
+
     .block {
         display: inline-block;
         width: 15px;
-        color: #ee0a24;
+        color: white;
         font-size: 12px;
         text-align: center;
         // background-color: #ee0a24;
@@ -153,27 +152,39 @@ function toggleZan(item) {
     height: 40px;
     line-height: 40px;
 }
+
+:deep(.van-tab__text--ellipsis) {
+    font-size: 16px;
+}
+
 :deep(.van-col.van-col--12) {
     margin-bottom: 16px;
+
     &:nth-child(even) {
         .work-item {
             margin-left: 8px;
         }
     }
+
     &:nth-child(odd) {
         .work-item {
             margin-right: 8px;
         }
     }
 }
+
 .world-list,
 .my-list {
     height: calc(100vh - 156px - 40px);
     padding-top: 16px;
     overflow: auto;
+    background: #f7f7f7;
 }
+
 .work-item {
-    border: 1px solid #ccc;
+    // border: 1px solid #ccc;
+    background: #fff;
+    box-shadow: 0px 0px 10px #f1f1f1;
     border-radius: 10px;
     padding: 0 15px;
     display: flex;
@@ -187,20 +198,26 @@ function toggleZan(item) {
         display: flex;
         text-align: center;
         justify-content: space-around;
+
         img {
             height: 200px;
             width: 100px;
         }
     }
+
     .work-name {
         display: flex;
         justify-content: space-between;
         margin: 0;
+        border-top: 1px solid #e1e1e1;
+        color: #666;
+
         span {
             display: inline-block;
             vertical-align: middle;
             line-height: 50px;
         }
+
         .name {
             max-width: 90px;
             text-align: right;
@@ -211,15 +228,16 @@ function toggleZan(item) {
     }
 
     &.my-work {
-        border: 1px solid #d79d46;
+        // border: 1px solid #d79d46;
+        box-shadow: 0px 0px 5px 1px #ffeccf;
     }
 }
 
 .add-btn {
     height: 252px;
-    border: 1px dashed #ccc;
+    border: 2px dashed orange;
     font-size: 64px;
-    color: #ccc;
+    color: orange;
 }
 
 span.zan {
@@ -237,13 +255,23 @@ span.zan {
         -webkit-transition-duration: 0s;
         transition-duration: 0s;
         margin-right: -10px;
+
         &.is-active {
             -webkit-transition-duration: 1s;
             transition-duration: 1s;
             background-position: -1120px 0;
         }
+
         &.choosen {
             background-position: -1120px 0;
+
+            &+span {
+                color: #e2264d;
+            }
+        }
+
+        &+span {
+            color: #aab9c2;
         }
     }
 }

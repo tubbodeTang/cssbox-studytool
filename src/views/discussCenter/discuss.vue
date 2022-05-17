@@ -2,19 +2,8 @@
     <div class="list-container">
         <van-search class="search" v-model="value" placeholder="请输入搜索关键词" />
 
-        <van-list
-            v-model:loading="loading"
-            :finished="finished"
-            finished-text="没有更多了"
-            @load="onLoad"
-        >
-            <van-cell-group
-                inset
-                v-for="item in list"
-                :key="item"
-                class="discuss-item"
-                @click="goToDetail(item)"
-            >
+        <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+            <van-cell-group inset v-for="item in list" :key="item" class="discuss-item" @click="goToDetail(item)">
                 <van-cell class="title-info">
                     <template #title>
                         <span class="title">{{ item.title }}</span>
@@ -38,6 +27,8 @@
                 </van-cell>
             </van-cell-group>
         </van-list>
+
+        <button class="add-btn" @click="goAddTopic">+</button>
     </div>
 </template>
 
@@ -73,7 +64,7 @@ const onLoad = () => {
             list.value.push({
                 id: list.value.length + 1,
                 title: lorem.generateSentences(1),
-                content:lorem.generateParagraphs(Math.floor(Math.random() * 10)),
+                content: lorem.generateParagraphs(Math.floor(Math.random() * 10)),
                 zanNum: Math.floor(Math.random() * 10),
                 avatar: multiavatar(list.value.length + 1),
                 userName: lorem.generateWords(1),
@@ -154,6 +145,12 @@ function goToDetail(topic) {
     store.commit('selectTopic', topic)
     store.commit('saveLastPageName', '讨论区')
 }
+function goAddTopic() {
+    router.push({
+        name: 'AddTopic'
+    })
+    store.commit('saveLastPageName', '讨论区')
+}
 </script>
 
 <style scoped lang="less">
@@ -163,28 +160,49 @@ function goToDetail(topic) {
     top: 46px;
     z-index: 100;
 }
+
+.add-btn {
+    position: fixed;
+    bottom: 100px;
+    right: 28px;
+    border-radius: 100%;
+    width: 70px;
+    height: 70px;
+    background: #73c0de;
+    border: none;
+    font-size: 36px;
+    font-weight: bold;
+    color: white;
+}
+
 .list-container {
     height: calc(100vh - 96px);
     overflow: auto;
     background-color: #f8f8f8;
     padding-top: 46px;
+
     .discuss-item {
         margin-top: 16px;
+
         .title-info {
             padding: 16px;
         }
+
         .other-info {
             padding: 5px 16px 0 16px;
         }
+
         .title {
             font-weight: bold;
         }
+
         .info {
             .update-time {
                 font-size: 12px;
                 color: #666;
             }
         }
+
         .avatar {
             span {
                 display: inline-block;
@@ -194,6 +212,7 @@ function goToDetail(topic) {
                 border-radius: 50px;
             }
         }
+
         .name {
             span {
                 display: inline-block;
