@@ -20,6 +20,7 @@
 
         <div class="view-card">
             <div class="sub-name">学习记录</div>
+            <p class="info">近一年学习记录</p>
             <div class="box-table">
                 <span class="box" :class="{ active: boxItem.isActive }" v-for="boxItem in boxData" :key="boxItem">
                 </span>
@@ -61,7 +62,7 @@ const staticData = ref([
     },
     {
         name: "参与讨论",
-        number: "0"
+        number: "1"
     },
     {
         name: "获得夸赞",
@@ -69,9 +70,9 @@ const staticData = ref([
     }
 ])
 let boxData = ref([])
-for (let i=0;i<366;i++){
+for (let i = 0; i < 366; i++) {
     boxData.value.push({
-        isActive: Math.random()< 0.5
+        isActive: Math.random() < 0.5
     })
 }
 let barChart
@@ -153,7 +154,7 @@ const onLoad = () => {
     background: #fefefe;
 
     .nav-name {
-        color: #333;
+        color: #454545;
         font-size: 25px;
         font-weight: bold;
         margin-bottom: 16px;
@@ -162,7 +163,7 @@ const onLoad = () => {
     .view-card {
         min-height: 100px;
         background: #fff;
-        border-radius: 5px;
+        border-radius: 10px;
         box-shadow: 0px 0px 30px #f1f1f1;
         margin-bottom: 16px;
         padding: 16px;
@@ -172,13 +173,13 @@ const onLoad = () => {
 
             .number {
                 color: orange;
-                font-size: 25px;
+                font-size: 28px;
                 font-weight: bold;
             }
         }
 
         .sub-name {
-            color: #333;
+            color: #454545;
             font-size: 18px;
             font-weight: bold;
             margin-bottom: 8px;
@@ -190,9 +191,10 @@ const onLoad = () => {
 
             .number {
                 display: block;
-                font-size: 18px;
+                font-size: 28px;
                 font-weight: bold;
                 margin-bottom: 4px;
+                color:orange;
             }
 
             .name {
@@ -201,13 +203,18 @@ const onLoad = () => {
         }
 
         .box-table {
+            max-height: 100px;
+            overflow: auto;
+            padding: 5px;
+
             .box {
                 display: inline-block;
                 height: 10px;
                 width: 10px;
                 background: #eee;
-                border: 1px solid #ccc;
+                border: 1px solid #ddd;
                 border-radius: 3px;
+                margin: -3px 2px;
 
                 &.active {
                     background: orange;
