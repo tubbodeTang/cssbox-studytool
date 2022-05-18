@@ -4,24 +4,26 @@
 
         <div v-if="process !== 100" class="content">
             <div class="description">{{ curContent.content }}</div>
-            <div class="imageContainer"></div>
+            <div class="imageContainer">
+                <img :src="curContent.image">
+            </div>
             <div class="next">
                 <van-button class="btn" round type="primary" @click="nextPage">下一节</van-button>
             </div>
         </div>
 
-        <div v-else class="finish">完成章节学习</div>
+        <div v-else class="content finish">
+            <div class="description">恭喜!<br>完成章节学习!</div>
+            <div class="imageContainer">
+                <img src="/src/assets/lessonImg/success.png">
+            </div>
+        </div>
 
-        <van-popup
-            v-if="lessonData.targetAttr || lessonData.targetAttrVal"
-            v-model:show="cardShow"
-            round
-            :style="{
-                height: '100%',
-                width: '100vw',
-                borderRadius: 0
-            }"
-        >
+        <van-popup v-if="lessonData.targetAttr || lessonData.targetAttrVal" v-model:show="cardShow" round :style="{
+            height: '100%',
+            width: '100vw',
+            borderRadius: 0
+        }">
             <div id="test" ref="flyItem" class="fly-item">
                 <div ref="flyItem2" class="fly-item2">
                     <card :attr-name="lessonData.targetAttr" @saved="collectAnimate"></card>
@@ -106,35 +108,59 @@ watch(process, (newVal) => {
 </script>
 
 <style lang="less" scoped>
-
-.content{
+.content {
     height: calc(100vh - 100px - 30px);
-    padding: 15px;
+    padding: 15px 30px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    .description{
+
+
+    &.finish {
+        justify-content: center;
+        .description {
+            text-align: center;
+        }
+    }
+
+    .description {
+        // min-height: 15%;
+        font-size: 18px;
+        color: #666;
+        padding-top: 50px;
+    }
+
+    .imageContainer {
         min-height: 30%;
 
+        img {
+            height: 100%;
+            width: 100%;
+        }
     }
-    .imageContainer{
-        min-height: 30%;
-    }
-    .next{
+
+    .next {
         text-align: center;
-        .btn{
-            width:100px;
-            height:100px;
+        padding-bottom: 33px;
+
+        .btn {
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
+            border: 10px orange;
+            border-style: double;
+            padding: 10px;
+            background: #73c0de;
         }
     }
 }
+
 :deep(.van-popup) {
     background-color: transparent;
 }
 
 .fly-item,
-.fly-item > .fly-item2 {
+.fly-item>.fly-item2 {
     // position: absolute;
     // width: 50px;
     // height: 100%;
@@ -146,7 +172,7 @@ watch(process, (newVal) => {
     transition-timing-function: linear;
 }
 
-.fly-item > .fly-item2 {
+.fly-item>.fly-item2 {
     transition-timing-function: cubic-bezier(0.55, 0, 0.85, 0.36);
 }
 </style>

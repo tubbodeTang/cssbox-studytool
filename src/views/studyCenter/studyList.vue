@@ -4,49 +4,34 @@
     </div>
     <div class="module-list" ref="container">
         <div class="module flowModule">
-            <p>流与布局</p>
+            <p>
+                <van-icon name="flag-o" />流与布局
+            </p>
             <div class="show-stage">
-                <span
-                    class="js-scroll fade-in"
-                    :style="{ animationDuration: `${index / 2}s` }"
-                    v-for="(item, index) in text"
-                    :ref="el => { if (el) texts.push(el) }"
-                    :key="item"
-                >
+                <span class="js-scroll fade-in" :style="{ animationDuration: `${index / 2}s` }"
+                    v-for="(item, index) in text" :ref="el => { if (el) texts.push(el) }" :key="item">
                     <Text class="test" :text="item" :styleObj="styleObjectBlock"></Text>
                 </span>
             </div>
             <van-list class="lesson-list">
-                <van-cell
-                    @click="toLearnPage('flow', lesson.title)"
-                    v-for="lesson in getLessonList('flow')"
-                    :key="lesson"
-                    :title="lesson.title"
-                    :class="{ active: lesson.canLearn }"
-                />
+                <van-cell @click="toLearnPage('flow', lesson.title)" v-for="lesson in getLessonList('flow')"
+                    :key="lesson" :title="lesson.title" :class="{ active: lesson.canLearn }" />
             </van-list>
         </div>
 
         <div class="module boxModule">
-            <p>块级排列</p>
+            <p>
+                <van-icon name="flag-o" />块级排列
+            </p>
             <div class="show-stage">
-                <div
-                    class="js-scroll fade-in-bottom"
-                    v-for="item in 4"
-                    :ref="el => { if (el) blocks.push(el) }"
-                    :key="item"
-                >
+                <div class="js-scroll fade-in-bottom" v-for="item in 4" :ref="el => { if (el) blocks.push(el) }"
+                    :key="item">
                     <Block class="test" :styleObj="styleObjectBlock"></Block>
                 </div>
             </div>
             <van-list class="lesson-list">
-                <van-cell
-                    @click="toLearnPage('box_block', lesson.title)"
-                    v-for="lesson in getLessonList('box_block')"
-                    :key="lesson"
-                    :title="lesson.title"
-                    :class="{ active: lesson.canLearn }"
-                >
+                <van-cell @click="toLearnPage('box_block', lesson.title)" v-for="lesson in getLessonList('box_block')"
+                    :key="lesson" :title="lesson.title" :class="{ active: lesson.canLearn }">
                     <template #right-icon>
                         <van-icon name="lock" class="lock-icon" />
                     </template>
@@ -54,25 +39,18 @@
             </van-list>
         </div>
         <div class="module inlineModule">
-            <p>行级排列</p>
+            <p>
+                <van-icon name="flag-o" />行级排列
+            </p>
             <div class="show-stage">
-                <span
-                    class="js-scroll slide-right"
-                    v-for="item in 4"
-                    :ref="el => { if (el) inlines.push(el) }"
-                    :key="item"
-                >
+                <span class="js-scroll slide-right" v-for="item in 4" :ref="el => { if (el) inlines.push(el) }"
+                    :key="item">
                     <Inline class="test" :styleObj="styleObjectInline"></Inline>
                 </span>
             </div>
             <van-list class="lesson-list">
-                <van-cell
-                    @click="toLearnPage('box_inline', lesson.title)"
-                    v-for="lesson in getLessonList('box_inline')"
-                    :key="lesson"
-                    :title="lesson.title"
-                    :class="{ active: lesson.canLearn }"
-                >
+                <van-cell @click="toLearnPage('box_inline', lesson.title)" v-for="lesson in getLessonList('box_inline')"
+                    :key="lesson" :title="lesson.title" :class="{ active: lesson.canLearn }">
                     <template #right-icon>
                         <van-icon name="lock" class="lock-icon" />
                     </template>
@@ -80,28 +58,32 @@
             </van-list>
         </div>
         <div class="module inlineboxModule" @click="toListPage('box_inline_block')">
-            <p>行内块级排列</p>
+            <p>
+                <van-icon name="flag-o" />行内块级排列
+            </p>
             <div class="show-stage">
-                <span
-                    class="js-scroll slide-right"
-                    v-for="item in 4"
-                    :ref="el => { if (el) inlines.push(el) }"
-                    :key="item"
-                >
+                <span class="js-scroll slide-right" v-for="item in 4" :ref="el => { if (el) inlines.push(el) }"
+                    :key="item">
                     <InlineBlock :styleObj="styleObjectIB"></InlineBlock>
                 </span>
             </div>
         </div>
         <div class="module breakFlowModule">
-            <p>浮动</p>
+            <p>
+                <van-icon name="flag-o" />浮动
+            </p>
             <div class="show-stage"></div>
         </div>
         <div class="module breakFlowModule">
-            <p>定位</p>
+            <p>
+                <van-icon name="flag-o" />定位
+            </p>
             <div class="show-stage"></div>
         </div>
         <div class="module breakFlowModule">
-            <p>层叠</p>
+            <p>
+                <van-icon name="flag-o" />层叠
+            </p>
             <div class="show-stage"></div>
         </div>
     </div>
@@ -122,11 +104,11 @@ import { useRouter } from 'vue-router'
 const store = useStore()
 
 const styleObjectBlock = {
+    color: '#999',
     borderWidth: '1px',
     borderStyle: 'solid',
-    borderColor: '#ccc',
+    borderColor: getColorByType('block', 'bgColor'),
     borderRadius: '5px',
-    backgroundColor: getColorByType('block', 'bgColor')
 }
 
 const styleObjectInline = {
@@ -248,47 +230,87 @@ onMounted(() => {
 .browser-head {
     position: fixed;
     top: 46px;
+
     img {
         width: 100%;
     }
 }
+
 .module-list {
-    height: calc(100% - 60px);
+    height: calc(100% - 75px);
     overflow-y: auto;
     overflow-x: hidden;
     margin-top: 70px;
+    background-color: #f7f7f7;
 }
+
 .module {
-    height: calc(100% - 60px);
-    border: 1px solid #efefef;
+    // height: calc(100% - 60px);
+    // border: 1px solid #efefef;
+
+    background-color: #fff;
+    box-shadow: 0px 0px 30px #f1f1f1;
     border-radius: 10px;
     padding: 16px;
     margin: 16px;
+
+
+
     p {
+        color: #333;
+        font-size: 18px;
         margin-top: 0;
         font-weight: bold;
+
+        .van-icon {
+            font-size: 32px;
+            margin-right: 6px;
+            color: #ffb7b7;
+            font-weight: bold;
+        }
     }
+
     .show-stage {
-        border: 1px solid #efefef;
+        border: 6px #efefef;
+        border-style: dotted;
+        border-radius: 10px;
         padding: 5px;
         min-height: 100px;
     }
+
     .lesson-list {
         margin-top: 16px;
+
         .van-cell {
-            padding: 10px 0;
+            padding: 15px 10px;
             color: #ccc;
+            box-shadow: 0px 0px 30px #f1f1f1;
+            // border: 1px solid #ccc;
+            margin: 10px 0;
+            border-radius: 10px;
+            background: #fff;
+
             &.active {
                 color: #333;
+
+                &:nth-child(even) {
+                    background: #73c0de;
+                    color: #fff;
+                }
+
+                &:nth-child(odd) {
+                    background: #ededed;
+                }
             }
+
             // .lock-icon {
             // }
         }
     }
 }
 
-.flowModule {
-}
+.flowModule {}
+
 .boxModule {
     // perspective: 1px;
     // transform-style: preserve-3d;
@@ -308,10 +330,9 @@ onMounted(() => {
     // }
 }
 
-.inlineModule {
-}
-.breakFlowModule {
-}
+.inlineModule {}
+
+.breakFlowModule {}
 
 .js-scroll {
     opacity: 0;

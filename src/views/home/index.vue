@@ -111,6 +111,7 @@ const showPopup = () => {
 }
 .container {
     height: calc(100vh - 96px);
+    overflow: hidden;
 
     .user-info {
         display: flex;
