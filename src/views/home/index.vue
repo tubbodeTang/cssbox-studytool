@@ -1,8 +1,8 @@
 <template>
     <van-nav-bar :title="pageTitle" safe-area-inset-top>
         <template #left>
-            <van-icon name="arrow-left" v-if="showBackBtn" @click="goBack" />
-            <van-icon class="big-icon" name="smile-o" @click="showPopup" v-if="isFirstPage" />
+            <van-icon class="big-icon blue" name="arrow-left" v-if="showBackBtn" @click="goBack" />
+            <van-icon class="big-icon blue" name="smile-o" @click="showPopup" v-if="isFirstPage" />
         </template>
         <template #right>
             <van-icon class="big-icon yellow" name="diamond" @click="toCardList" />
@@ -11,15 +11,10 @@
     <div class="container">
         <router-view></router-view>
 
-        <van-popup
-            :show="show"
-            position="left"
-            :style="{
-                height: '100%',
-                width: '150px'
-            }"
-            @click-overlay="closeSideBar"
-        >
+        <van-popup :show="show" position="left" :style="{
+            height: '100%',
+            width: '150px'
+        }" @click-overlay="closeSideBar">
             <div class="user-info">
                 <div class="avatar">
                     <span v-html="avatar"></span>
@@ -29,7 +24,7 @@
             </div>
             <van-sidebar v-model="active">
                 <div class="group">
-                    <van-sidebar-item title="数据统计" dot @click="goStatistic"/>
+                    <van-sidebar-item title="数据统计" dot @click="goStatistic" />
                     <van-sidebar-item title="新消息" badge="5" />
                     <van-sidebar-item title="内容收藏" />
                 </div>
@@ -41,7 +36,7 @@
             </van-sidebar>
         </van-popup>
     </div>
-    <van-tabbar route safe-area-inset-bottom @change="onChange">
+    <van-tabbar route safe-area-inset-bottom active-color="#73c0de" @change="onChange">
         <van-tabbar-item replace to="/study" icon="home-o" name="学习中心">学习中心</van-tabbar-item>
         <van-tabbar-item replace to="/creationCenter" icon="flower-o" name="创意区">创意区</van-tabbar-item>
         <van-tabbar-item replace to="/discussCenter" icon="friends-o" name="讨论区" badge="5">讨论区</van-tabbar-item>
@@ -83,9 +78,9 @@ function toCardList() {
     store.commit('changePageName', "收集页")
 }
 
-function goStatistic(){
+function goStatistic() {
     show.value = false;
-     router.push({
+    router.push({
         name: 'Statistic'
     })
     store.commit('changePageName', "学习统计")
@@ -105,10 +100,16 @@ const showPopup = () => {
 <style lang="less">
 .big-icon {
     font-size: 20px !important;
+
     &.yellow {
-        color: #c09918;
+        color: orange;
+    }
+
+    &.blue {
+        color: #73c0de;
     }
 }
+
 .container {
     height: calc(100vh - 96px);
     overflow: hidden;
@@ -118,6 +119,7 @@ const showPopup = () => {
         flex-direction: column;
         text-align: center;
         margin-top: 20px;
+
         .avatar {
             span {
                 width: 100px;
@@ -125,16 +127,19 @@ const showPopup = () => {
                 display: inline-block;
             }
         }
+
         .achieve {
             margin: 10px;
             border-bottom: 1px solid #efefef;
         }
-        .achieve {
-        }
+
+        .achieve {}
     }
+
     .van-sidebar {
         margin-top: 10px;
         width: 100%;
+
         .group {
             margin-bottom: 20px;
         }
