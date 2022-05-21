@@ -12,6 +12,7 @@
         <van-action-bar>
             <van-action-bar-icon icon="smile-o" />
             <van-action-bar-icon icon="photo-o" />
+            <van-action-bar-button text="取消" @click="goAddTopic" />
             <van-action-bar-button color="#ff962a" text="发布" @click="goAddTopic" />
         </van-action-bar>
     </div>

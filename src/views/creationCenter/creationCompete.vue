@@ -20,7 +20,7 @@
                             <span class="colon">:</span>
                             <span class="block">{{ timeData.minutes }}</span>
                             <span class="colon">:</span>
-                            <span class="block">{{ timeData.seconds }}</span>
+                            <span class="block">{{ timeData.seconds }}</span> 
                             <span class="colon">:</span>
                             <span class="block">{{ timeData.millisecond}}</span>
                         </template> -->
@@ -105,7 +105,8 @@ function toFight() {
                 display: inline-block;
                 margin: 0 5px;
                 font-size: 18px;
-                padding: 0 5px;
+                padding: 4px 5px 2px 5px;
+                color: white;
                 line-height: 22px;
                 background: orange;
                 border-radius: 10px;
