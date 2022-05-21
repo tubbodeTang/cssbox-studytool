@@ -53,16 +53,13 @@ console.log(lessonContent)
 let lessonPage = ref(0)
 let process = ref(0)
 let curContent = ref(lessonContent[0])
-store.commit('changeSubPageName', curContent.value.title)
 console.log(curContent.value)
 
 function nextPage() {
     if (lessonPage.value++ < lessonContent.length - 1) {
         curContent.value = lessonContent[lessonPage.value]
         process.value = lessonPage.value / lessonContent.length * 100
-        store.commit('changeSubPageName', curContent.value.title)
     } else {
-        store.commit('changeSubPageName', '完成✅')
         process.value = 100
     }
 }
@@ -118,6 +115,7 @@ watch(process, (newVal) => {
 
     &.finish {
         justify-content: center;
+
         .description {
             text-align: center;
         }

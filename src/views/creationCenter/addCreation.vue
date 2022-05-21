@@ -109,7 +109,7 @@
                 @click="deleteElement"
                 :color="elementList.length && canOperate ? '#ee0a24' : '#ccc'"
             />
-            <van-action-bar-button type="success" text="保存" @click="workDone" />
+            <van-action-bar-button type="success" color="#73c0de" text="保存" @click="workDone" />
             <van-action-bar-button color="#ff962a" text="发布" @click="workDespatch" />
         </van-action-bar>
     </div>
@@ -127,7 +127,6 @@ import { useRouter } from 'vue-router'
 
 
 const store = useStore()
-store.commit('changeSubPageName', '新创作')
 
 function getActiveCardsName() {
     return store.state.activeCardList.map(item => item.attr)

@@ -143,13 +143,11 @@ function goToDetail(topic) {
     })
     generateComment(topic)
     store.commit('selectTopic', topic)
-    store.commit('saveLastPageName', '讨论区')
 }
 function goAddTopic() {
     router.push({
         name: 'AddTopic'
     })
-    store.commit('saveLastPageName', '讨论区')
 }
 </script>
 

@@ -47,7 +47,6 @@ function toCardDetail(card) {
         name: 'CardPage',
         params: { attrName: card.attr }
     })
-    store.commit('saveLastPageName', '收集页')
     // store.commit('changeActiveModule', )
 }
 </script>

@@ -125,40 +125,11 @@ const styleObjectIB = {
 }
 
 const router = useRouter()
-// function toListPage(type) {
-//     router.push({
-//         name: 'StudyList'
-//     })
-//     store.commit('saveLastPageName', '学习中心')
-//     store.commit('changeActiveModule', type)
-
-// }
-
-
-// const lessonList = getLessonList(activeModule.value)
-
-
-// // const list = ref([]);
-// const loading = ref(false);
-// const finished = ref(false);
-
-// const onLoad = () => {
-//     // 异步更新数据
-//     // setTimeout 仅做示例，真实场景中一般为 ajax 请求
-//     setTimeout(() => {
-//         list.value = lessonList
-//         // 加载状态结束
-//         loading.value = false;
-//         // 数据全部加载完成
-//         finished.value = true;
-//     }, 500);
-// };
 
 function toLearnPage(module, lessonName) {
     router.push({
         name: 'StudyPage'
     })
-    // store.commit('saveLastPageName', '学习中心')
     store.commit('changeActiveModule', module)
     store.commit('changeActiveLesson', lessonName)
 

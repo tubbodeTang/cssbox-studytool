@@ -1,8 +1,8 @@
 <template>
     <div>
-        <van-notice-bar mode="closeable" left-icon="volume-o" :scrollable="true" @click="toTimeLimit" @close.stop>
+        <van-notice-bar mode="closeable" :scrollable="true" :speed="100" @click="toTimeLimit" @close.stop>
             <template #left-icon>
-                <van-icon name="bullhorn-o" class="louder-icon" />
+                <van-icon name="volume" class="louder-icon" />
                 <van-count-down class="my-count-down" :time="time" format="HH:mm:ss:SS">
                     <template #default="timeData">
                         <span class="block">{{ timeData.hours }}</span>
@@ -12,12 +12,10 @@
                         <span class="block">{{ timeData.seconds }}</span>
                     </template>
                 </van-count-down>
-                <span>限时挑战：</span>
+                <!-- <span>限时挑战：</span> -->
             </template>
             <template #default>
-                明月直入，无心可猜。
-                仙人抚我顶，结发受长生。
-                今人不见古时月，今月曾经照古人。
+                【限时挑战】快来参加挑战，秀出你的创意作品，更多荣耀等你拿～！【限时挑战】
             </template>
         </van-notice-bar>
         <van-tabs v-model:active="active" @click-tab="onClickTab" :color="'orange'">
@@ -96,13 +94,11 @@ function toAddPage() {
     router.push({
         name: 'AddCreation'
     })
-    store.commit('saveLastPageName', '创意区')
 }
 function toTimeLimit() {
     router.push({
         name: 'CreationCompete'
     })
-    store.commit('saveLastPageName', '创意区')
 }
 function toggleZan(item) {
     if (item.myLike) {
@@ -122,6 +118,7 @@ function toggleZan(item) {
 <style scoped lang="less">
 .louder-icon {
     font-size: 18px;
+    color: orange;
 }
 
 .my-count-down {

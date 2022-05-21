@@ -53,7 +53,6 @@ function toFight() {
     router.push({
         name: 'AddCreation'
     })
-    // store.commit('saveLastPageName', '创意区')
 }
 </script>
 

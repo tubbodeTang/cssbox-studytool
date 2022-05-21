@@ -1,7 +1,7 @@
 <template>
     <van-nav-bar :title="pageTitle" safe-area-inset-top>
         <template #left>
-            <van-icon class="big-icon blue" name="arrow-left" v-if="showBackBtn" @click="goBack" />
+            <van-icon class="big-icon blue" name="arrow-left" v-if="!isFirstPage" @click="goBack" />
             <van-icon class="big-icon blue" name="smile-o" @click="showPopup" v-if="isFirstPage" />
         </template>
         <template #right>
@@ -36,7 +36,7 @@
             </van-sidebar>
         </van-popup>
     </div>
-    <van-tabbar route safe-area-inset-bottom active-color="#73c0de" @change="onChange">
+    <van-tabbar route safe-area-inset-bottom active-color="#73c0de" >
         <van-tabbar-item replace to="/study" icon="home-o" name="学习中心">学习中心</van-tabbar-item>
         <van-tabbar-item replace to="/creationCenter" icon="flower-o" name="创意区">创意区</van-tabbar-item>
         <van-tabbar-item replace to="/discussCenter" icon="friends-o" name="讨论区" badge="5">讨论区</van-tabbar-item>
@@ -60,22 +60,58 @@ let showBackBtn = computed(() => store.state.showBackBtn)
 const route = useRoute()
 let isFirstPage = computed(() => {
     console.log(route.fullPath)
-    return route.fullPath === '/study/studyList' ||
+    switch (route.fullPath) {
+        case '/study/studyList':
+            store.commit('changePageName', "学习中心")
+            break;
+        case '/study/studyPage':
+            store.commit('changePageName',store.state.activeLesson)
+            break;
+        case '/creationCenter/creation':
+            store.commit('changePageName', "创意区")
+            break;
+        case '/creationCenter/addCreation':
+            store.commit('changePageName', "新创作")
+            break;
+        case '/creationCenter/creationCompete':
+            store.commit('changePageName', "竞赛")
+            break;
+        case '/discussCenter/discuss':
+            store.commit('changePageName', "讨论区")
+            break;
+        case '/discussCenter/topicDetail':
+            store.commit('changePageName', "详情")
+            break;
+        case '/discussCenter/addTopic':
+            store.commit('changePageName', "添加讨论")
+            break;
+        case '/collectionCenter/cardList':
+            store.commit('changePageName', "收集箱")
+            break;
+        case '/collectionCenter/cardPage':
+            store.commit('changePageName', "卡片详情")
+            break;
+        case '/statisticCenter/statistic':
+            store.commit('changePageName', "学习统计")
+            break;
+    }
+    let isFirstPage = route.fullPath === '/study/studyList' ||
         route.fullPath === '/creationCenter/creation' ||
         route.fullPath === '/discussCenter/discuss'
+    if (isFirstPage)
+        store.commit('popOldPageName')
+    return isFirstPage
 })
 
 const router = useRouter()
 function goBack() {
     router.go(-1)
-    store.commit('popOldPageName')
     store.commit('createEleIDClear') // 退出创作页组件编号回归1
 }
 function toCardList() {
     router.push({
         name: 'CardList'
     })
-    store.commit('changePageName', "收集页")
 }
 
 function goStatistic() {
@@ -83,10 +119,8 @@ function goStatistic() {
     router.push({
         name: 'Statistic'
     })
-    store.commit('changePageName', "学习统计")
 }
 
-const onChange = (index) => store.commit('changePageName', index);
 const closeSideBar = (index) => {
     show.value = false;
 };
