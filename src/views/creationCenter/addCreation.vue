@@ -390,7 +390,6 @@ const workDone = () => {
         alert('保存成功')
         store.commit('createEleIDClear') // 编号归位
         router.go(-1)
-        store.commit('popOldPageName')
     });
 
 };
@@ -398,7 +397,6 @@ const workDespatch = () => {
     alert('作品发布')
     store.commit('createEleIDClear') // 编号归位
     router.go(-1)
-    store.commit('popOldPageName')
 };
 
 </script>

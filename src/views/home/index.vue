@@ -98,8 +98,6 @@ let isFirstPage = computed(() => {
     let isFirstPage = route.fullPath === '/study/studyList' ||
         route.fullPath === '/creationCenter/creation' ||
         route.fullPath === '/discussCenter/discuss'
-    if (isFirstPage)
-        store.commit('popOldPageName')
     return isFirstPage
 })
 
