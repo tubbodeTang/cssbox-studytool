@@ -22,21 +22,33 @@
                 <div class="user-name">txb406</div>
                 <div class="achieve"></div>
             </div>
-            <van-sidebar v-model="active">
+            <van-sidebar v-model="active" @change="onChange">
                 <div class="group">
-                    <van-sidebar-item title="数据统计" dot @click="goStatistic" />
+                    <van-sidebar-item title="数据统计" dot />
                     <van-sidebar-item title="新消息" badge="5" />
                     <van-sidebar-item title="内容收藏" />
                 </div>
                 <div class="group">
                     <van-sidebar-item title="重置学习记录" />
-                    <van-sidebar-item title="学习提醒" />
-                    <van-sidebar-item title="夜间模式" />
+                    <van-sidebar-item>
+                        <template #title>
+                            <span>学习提醒</span>
+                            <van-switch v-model="openNotice" size="16px" active-color="#ee0a24" inactive-color="#dcdee0"
+                                style="vertical-align:sub; margin-left: 20px;" />
+                        </template>
+                    </van-sidebar-item>
+                    <van-sidebar-item>
+                        <template #title>
+                            <span>夜间模式</span>
+                            <van-switch v-model="openNightMode" size="16px" active-color="#ee0a24"
+                                inactive-color="#dcdee0" style="vertical-align:sub; margin-left: 20px;" />
+                        </template>
+                    </van-sidebar-item>
                 </div>
             </van-sidebar>
         </van-popup>
     </div>
-    <van-tabbar route safe-area-inset-bottom active-color="#73c0de" >
+    <van-tabbar route safe-area-inset-bottom active-color="#73c0de">
         <van-tabbar-item replace to="/study" icon="home-o" name="学习中心">学习中心</van-tabbar-item>
         <van-tabbar-item replace to="/creationCenter" icon="flower-o" name="创意区">创意区</van-tabbar-item>
         <van-tabbar-item replace to="/discussCenter" icon="friends-o" name="讨论区" badge="5">讨论区</van-tabbar-item>
@@ -49,8 +61,42 @@ import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
 import multiavatar from '@multiavatar/multiavatar/esm' // 自动生成头像
+import { Toast } from 'vant';
+import { Dialog } from 'vant';
 
 let avatar = ref(multiavatar('txb406'))
+let openNotice = ref(false)
+let openNightMode = ref(false)
+const active = ref(-1);
+const onChange = (index) => {
+    active.value = -1
+    if (index == 0) {
+        goStatistic()
+    } else if (index == 1) {
+    } else if (index == 2) {
+    } else if (index == 3) {
+        Dialog.alert({
+            message: '确定要重置记录吗？\n 重置后不可恢复！',
+        }).then(() => {
+            // on close
+            Toast.loading({
+                message: '清理中...',
+                forbidClick: true,
+                onClose: () => {
+                    Toast.success('重置成功')
+                    show.value = false;
+                }
+            });
+
+        });
+
+    } else if (index == 4) {
+        openNotice.value = !openNotice.value
+    } else if (index == 5) {
+        openNightMode.value = !openNightMode.value
+    }
+}
+
 
 const store = useStore()
 
@@ -65,7 +111,7 @@ let isFirstPage = computed(() => {
             store.commit('changePageName', "学习中心")
             break;
         case '/study/studyPage':
-            store.commit('changePageName',store.state.activeLesson)
+            store.commit('changePageName', store.state.activeLesson)
             break;
         case '/creationCenter/creation':
             store.commit('changePageName', "创意区")
