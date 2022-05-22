@@ -75,7 +75,7 @@ const activeNames = ref([0, 1, 2]);
 
     .card-name {
         font-size: 24px;
-        margin: 20px 0 16px;
+        margin: 27px 0 16px;
     }
 
     .card-content {}

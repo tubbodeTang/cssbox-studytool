@@ -13,9 +13,19 @@
         </div>
 
         <div v-else class="content finish">
-            <div class="description">恭喜!<br>完成章节学习!</div>
-            <div class="imageContainer">
-                <img src="/src/assets/lessonImg/success.png">
+            <div v-if="isPass">
+                <div class="description">恭喜!<br>完成章节学习!</div>
+                <div class="imageContainer">
+                    <img src="/src/assets/lessonImg/pass.png">
+                </div>
+                <van-button class="btn" round type="primary" @click="goback">返回</van-button>
+            </div>
+            <div v-else>
+                <div class="description">很遗憾!<br>未能完成章节学习任务!</div>
+                <div class="imageContainer">
+                    <img src="/src/assets/lessonImg/fail.png">
+                </div>
+                <van-button class="btn" round type="primary" @click="goback">返回</van-button>
             </div>
         </div>
 
@@ -39,6 +49,7 @@ import { getLessonData } from '@/api/getLessonData';
 import { computed, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 import Card from '../../components/card.vue';
+import router from '../../router';
 
 const store = useStore()
 
@@ -94,14 +105,19 @@ function collectAnimate() {
         }, 490);
     }
 }
-
+let isPass = ref(true)
 watch(process, (newVal) => {
     if (newVal === 100) {
         cardShow.value = true
+        isPass.value = Math.random() < 0.5
     } else {
         cardShow.value = false
     }
 })
+
+function goback() {
+    router.go(-1)
+}
 </script>
 
 <style lang="less" scoped>
@@ -118,6 +134,15 @@ watch(process, (newVal) => {
 
         .description {
             text-align: center;
+        }
+
+        text-align: center;
+
+        .btn {
+            margin-top: 18px;
+            padding: 0 20px;
+            font-size: 18px;
+            background: #73c0de;
         }
     }
 
