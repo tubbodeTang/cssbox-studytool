@@ -73,6 +73,7 @@ const onChange = (index) => {
     if (index == 0) {
         goStatistic()
     } else if (index == 1) {
+        goMsgList()
     } else if (index == 2) {
     } else if (index == 3) {
         Dialog.alert({
@@ -131,6 +132,9 @@ let isFirstPage = computed(() => {
         case '/discussCenter/addTopic':
             store.commit('changePageName', "添加讨论")
             break;
+        case '/discussCenter/msgList':
+            store.commit('changePageName', "新消息")
+            break;
         case '/collectionCenter/cardList':
             store.commit('changePageName', "收集箱")
             break;
@@ -162,6 +166,13 @@ function goStatistic() {
     show.value = false;
     router.push({
         name: 'Statistic'
+    })
+}
+
+function goMsgList() {
+    show.value = false;
+    router.push({
+        name: 'MsgList'
     })
 }
 
