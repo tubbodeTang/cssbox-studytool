@@ -108,8 +108,8 @@ function collectAnimate() {
 let isPass = ref(true)
 watch(process, (newVal) => {
     if (newVal === 100) {
-        cardShow.value = true
         isPass.value = Math.random() < 0.5
+        cardShow.value = isPass.value ? true : false
     } else {
         cardShow.value = false
     }
@@ -143,6 +143,7 @@ function goback() {
             padding: 0 20px;
             font-size: 18px;
             background: #73c0de;
+            border-color: #73c0de;
         }
     }
 
