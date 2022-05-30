@@ -2,7 +2,7 @@
     <div class="container">
         <div class="card-base">
             <div class="card-icon">
-                <img :src="'/src/assets/attrIcon/' + cardInfo.attr + '.png'" />
+                <img :src="imgUrl" />
             </div>
             <div>
                 <!-- 属性名 -->
