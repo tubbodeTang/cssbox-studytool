@@ -43,7 +43,7 @@ console.log(cardInfo)
 
 // 获取assets静态资源
 const getAssetsFile = (url) => {
-   return new URL(`../assets/attrIcon/${url}`, import.meta.url).href
+   return new URL(`../../assets/attrIcon/${url}`, import.meta.url).href
 }
 
 const activeNames = ref([0, 1, 2]);
