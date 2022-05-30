@@ -38,7 +38,7 @@ const route = useRoute()
 console.log(route.params.attrName)
 
 const cardInfo = getCardInfo(route.params.attrName)
-const imgUrl = new URL('/src/assets/attrIcon/' + cardInfo.attr + '.png', import.meta.url).href
+const imgUrl = new URL('../../assets/attrIcon/' + cardInfo.attr + '.png', import.meta.url).href
 console.log(cardInfo)
 
 const activeNames = ref([0, 1, 2]);
