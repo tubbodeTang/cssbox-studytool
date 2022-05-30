@@ -1,14 +1,15 @@
+import occupyImg from '@/assets/lessonImg/occupyImg.jpg'
 const competeList = [{
     id: 1,
     competeName: '城市高楼',
     content: '比比谁的城市更繁华？',
-    imgSrc: '/src/assets/lessonImg/occupyImg.jpg',
+    imgSrc: occupyImg,
     joinNum: Math.floor(Math.random() * 10),
 }, {
     id: 2,
     competeName: '月夜',
     content: '在月色迷人的夜晚，你能想象到什么样的场景？',
-    imgSrc: '/src/assets/lessonImg/occupyImg.jpg',
+    imgSrc: occupyImg,
     joinNum: Math.floor(Math.random() * 10),
 }, ]
 

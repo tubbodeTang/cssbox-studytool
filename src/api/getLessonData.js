@@ -1,3 +1,5 @@
+import lesson1 from '@/assets/lessonImg/lesson1.jpg'
+import occupyImg from '@/assets/lessonImg/occupyImg.jpg'
 const lessonData = {
     flow: [{
         id: 1,
@@ -9,23 +11,23 @@ const lessonData = {
             id: 1,
             content: `写字的时候我们是从左到右，
             从上到下的排布文字，网页中的元素也有类似于此的排布方向。`,
-            image: '/src/assets/lessonImg/lesson1.jpg'
+            image: lesson1
         }, {
             id: 2,
             content: '网页的排布也有两种流向：横向-从左到右，纵向-从上到下，这种排布方向就是流。',
-            image: '/src/assets/lessonImg/occupyImg.jpg'
+            image: occupyImg
         }, {
             id: 3,
             content: '网页中的元素区域可以看成是一个个矩形的区域，它们按照从上到下从左到右的流排布。',
-            image: '/src/assets/lessonImg/occupyImg.jpg'
+            image: occupyImg
         }, {
             id: 4,
             content: '这其中，负责从上到下纵向排布的区域，叫做块级区域',
-            image: '/src/assets/lessonImg/occupyImg.jpg'
+            image: occupyImg
         }, {
             id: 5,
             content: '负责从左到右横向排布的区域，叫做行级区域',
-            image: '/src/assets/lessonImg/occupyImg.jpg'
+            image: occupyImg
         }],
     }, {
         id: 2,
