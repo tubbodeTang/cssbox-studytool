@@ -1,13 +1,18 @@
+import imgUrl1 from '@/assets/demoImg/3-1.png'
+import imgUrl2 from '@/assets/demoImg/3-2.png'
+import imgUrl3 from '@/assets/demoImg/3-3.png'
+import imgUrl4 from '@/assets/demoImg/3-4.png'
+
 export let mydraftList = [{
     id: 1,
     workName: '测试1',
     likeNum: 0,
-    img: new URL('/src/assets/demoImg/3-1.png', import.meta.url).href
+    img: imgUrl1
 }, {
     id: 2,
     workName: '测试2',
     likeNum: 0,
-    img: new URL('/src/assets/demoImg/3-2.png', import.meta.url).href
+    img: imgUrl2
 }]
 
 
@@ -17,26 +22,26 @@ export let worldList = [{
     userId: 'txb406',
     myLike: false,
     likeNum: 0,
-    img: new URL('/src/assets/demoImg/3-1.png', import.meta.url).href
+    img: imgUrl1
 }, {
     id: 4,
     workName: '测试2',
     userId: 'txb406',
     likeNum: 0,
-    img: new URL('/src/assets/demoImg/3-2.png', import.meta.url).href
+    img: imgUrl2
 }, {
     id: 5,
     workName: '测试1',
     userId: 'txbdev',
     myLike: false,
     likeNum: 0,
-    img: new URL('/src/assets/demoImg/3-3.png', import.meta.url).href
+    img: imgUrl3
 }, {
     id: 6,
     workName: '测试2',
     userId: 'txbdev',
     likeNum: 12,
-    img: new URL('/src/assets/demoImg/3-4.png', import.meta.url).href
+    img: imgUrl4
 }]
 
 import store from '@/store/index.js'
