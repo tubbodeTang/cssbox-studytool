@@ -38,7 +38,6 @@ const route = useRoute()
 console.log(route.params.attrName)
 
 const cardInfo = getCardInfo(route.params.attrName)
-// const imgUrl = new URL('../../assets/attrIcon/' + , import.meta.url).href
 console.log(cardInfo)
 
 // 获取assets静态资源

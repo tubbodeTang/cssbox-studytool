@@ -4,7 +4,7 @@
             <van-col span="12" v-for="item in cardList" :key="item">
                 <div class="card-item" @click="toCardDetail(item)" :class="{ inactive: !item.state }">
                     <div class="card-icon">
-                        <img :src="'/src/assets/attrIcon/' + item.attr + '.png'" />
+                        <img :src="getAssetsFile(item.attr + '.png')" />
                     </div>
 
                     <p class="card-name">{{ item.name }}</p>
@@ -26,6 +26,11 @@ import { useStore } from 'vuex'
 const store = useStore()
 const allCardList = getAllCardsData()
 const allCardsName = getAllCardsName()
+
+// 获取assets静态资源
+const getAssetsFile = (url) => {
+   return new URL(`../../assets/attrIcon/${url}`, import.meta.url).href
+}
 
 function getAllCardsName() {
     return store.state.activeCardList.map(item => item.attr)

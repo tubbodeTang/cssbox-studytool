@@ -2,7 +2,7 @@
     <div class="card">
         <div>
             <div class="card-icon">
-                <img :src="'/src/assets/attrIcon/' + cardInfo.attr + '.png'" />
+                <img :src="getAssetsFile(cardInfo.attr + '.png')" />
             </div>
             <!-- 属性名 -->
             <p class="card-name">{{ attrName }}</p>
@@ -42,6 +42,11 @@ let props = defineProps({
 })
 const cardInfo = getLessonRelateCard(props.attrName)
 console.log(cardInfo)
+
+// 获取assets静态资源
+const getAssetsFile = (url) => {
+   return new URL(`../assets/attrIcon/${url}`, import.meta.url).href
+}
 
 const store = useStore()
 const emit = defineEmits(['saved'])
