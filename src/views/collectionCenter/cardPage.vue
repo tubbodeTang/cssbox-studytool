@@ -2,7 +2,7 @@
     <div class="container">
         <div class="card-base">
             <div class="card-icon">
-                <img :src="imgUrl" />
+                <img :src="getAssetsFile(cardInfo.attr + '.png')" />
             </div>
             <div>
                 <!-- 属性名 -->
@@ -38,8 +38,13 @@ const route = useRoute()
 console.log(route.params.attrName)
 
 const cardInfo = getCardInfo(route.params.attrName)
-const imgUrl = new URL('../../assets/attrIcon/' + cardInfo.attr + '.png', import.meta.url).href
+// const imgUrl = new URL('../../assets/attrIcon/' + , import.meta.url).href
 console.log(cardInfo)
+
+// 获取assets静态资源
+const getAssetsFile = (url) => {
+   return new URL(`../assets/attrIcon/${url}`, import.meta.url).href
+}
 
 const activeNames = ref([0, 1, 2]);
 
