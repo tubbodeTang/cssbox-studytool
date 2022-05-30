@@ -1,18 +1,20 @@
 <template>
     <div class="list-container">
-        <van-search class="search" v-model="value" placeholder="请输入搜索关键词" />
 
         <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
             <van-cell-group inset v-for="item in list" :key="item" class="discuss-item" @click="goToDetail(item)">
                 <van-cell class="title-info">
                     <template #title>
+                        <span class="pre-title">Re：</span>
                         <span class="title">{{ item.title }}</span>
                     </template>
+                    <van-icon class="position:fixed; right:0;" name="arrow" />
+
                 </van-cell>
                 <van-cell class="other-info">
                     <template #title>
                         <div class="info">
-                            <van-tag plain color="#666">{{ item.topicLabel }}</van-tag>
+                            <span color="#666">{{ item.title }}</span>
                             <div class="update-time">{{ item.updateDate }}</div>
                         </div>
                     </template>
@@ -27,8 +29,6 @@
                 </van-cell>
             </van-cell-group>
         </van-list>
-
-        <button class="add-btn" @click="goAddTopic">+</button>
     </div>
 </template>
 
@@ -60,7 +60,7 @@ const onLoad = () => {
     // 异步更新数据
     // setTimeout 仅做示例，真实场景中一般为 ajax 请求
     setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 6; i++) {
             list.value.push({
                 id: list.value.length + 1,
                 title: lorem.generateSentences(1),
@@ -79,7 +79,7 @@ const onLoad = () => {
         loading.value = false;
 
         // 数据全部加载完成
-        if (list.value.length >= 40) {
+        if (list.value.length >= 6) {
             finished.value = true;
         }
     }, 1000);
@@ -144,11 +144,7 @@ function goToDetail(topic) {
     generateComment(topic)
     store.commit('selectTopic', topic)
 }
-function goAddTopic() {
-    router.push({
-        name: 'AddTopic'
-    })
-}
+
 </script>
 
 <style scoped lang="less">
@@ -177,20 +173,42 @@ function goAddTopic() {
     height: calc(100vh - 96px);
     overflow: auto;
     background-color: #f8f8f8;
-    padding-top: 46px;
 
     .discuss-item {
         margin-top: 16px;
 
         .title-info {
             padding: 16px;
+
+            :deep(.van-cell__title) {
+                flex: none;
+                max-width: 90%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
         }
 
         .other-info {
             padding: 5px 16px 0 16px;
+            justify-content: space-between;
+
+            :deep(.van-cell__title) {
+                flex: none;
+                max-width: 80%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
         }
 
         .title {
+            font-weight: bold;
+
+        }
+
+        .pre-title {
+            font-size: 18px;
             font-weight: bold;
         }
 

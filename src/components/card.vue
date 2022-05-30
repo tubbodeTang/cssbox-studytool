@@ -2,7 +2,7 @@
     <div class="card">
         <div>
             <div class="card-icon">
-                <img :src="'/src/assets/attrIcon/'+cardInfo.attr+'.png'" />
+                <img :src="'/src/assets/attrIcon/' + cardInfo.attr + '.png'" />
             </div>
             <!-- 属性名 -->
             <p class="card-name">{{ attrName }}</p>
@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <div class="check-btn" @click="saveCard">确定</div>
+        <van-button class="check-btn" round type="primary" @click="saveCard">确定</van-button>
     </div>
 </template>
 
@@ -79,39 +79,53 @@ function saveCard() {
 
     animation-name: example;
     animation-duration: 1s;
+
     // top: 20%;
     // left: 8%;
     .card-icon {
         display: flex;
         text-align: center;
         justify-content: space-around;
+
         img {
             height: 150px;
             width: 150px;
         }
-        .card-name {
-        }
+
     }
 
-    .card-content {
+    .card-name {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 10px 0;
     }
+
+    .card-content {}
 
     .card-item-list {
         padding: 0 10px;
+
         .list-item {
             display: flex;
             justify-content: space-between;
+
             .title {
                 text-align: left;
                 width: 100px;
+                white-space: nowrap;
             }
+
             .content {
+                text-align: right;
             }
         }
     }
 
     .check-btn {
-        text-align: center;
+        padding: 0 20px;
+        font-size: 18px;
+        background: #73c0de;
+        border-color: #73c0de;
     }
 }
 
@@ -120,15 +134,19 @@ function saveCard() {
     0% {
         transform: rotateY(0deg);
     }
+
     25% {
         transform: rotateY(130deg);
     }
+
     50% {
         transform: rotateY(260deg);
     }
+
     75% {
         transform: rotateY(300deg);
     }
+
     100% {
         transform: rotateY(360deg);
     }

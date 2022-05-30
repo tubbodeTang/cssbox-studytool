@@ -4,24 +4,36 @@
 
         <div v-if="process !== 100" class="content">
             <div class="description">{{ curContent.content }}</div>
-            <div class="imageContainer"></div>
+            <div class="imageContainer">
+                <img :src="curContent.image">
+            </div>
             <div class="next">
                 <van-button class="btn" round type="primary" @click="nextPage">下一节</van-button>
             </div>
         </div>
 
-        <div v-else class="finish">完成章节学习</div>
+        <div v-else class="content finish">
+            <div v-if="isPass">
+                <div class="description">恭喜!<br>完成章节学习!</div>
+                <div class="imageContainer">
+                    <img src="/src/assets/lessonImg/pass.png">
+                </div>
+                <van-button class="btn" round type="primary" @click="goback">返回</van-button>
+            </div>
+            <div v-else>
+                <div class="description">很遗憾!<br>未能完成章节学习任务!</div>
+                <div class="imageContainer">
+                    <img src="/src/assets/lessonImg/fail.png">
+                </div>
+                <van-button class="btn" round type="primary" @click="goback">返回</van-button>
+            </div>
+        </div>
 
-        <van-popup
-            v-if="lessonData.targetAttr || lessonData.targetAttrVal"
-            v-model:show="cardShow"
-            round
-            :style="{
-                height: '100%',
-                width: '100vw',
-                borderRadius: 0
-            }"
-        >
+        <van-popup v-if="lessonData.targetAttr || lessonData.targetAttrVal" v-model:show="cardShow" round :style="{
+            height: '100%',
+            width: '100vw',
+            borderRadius: 0
+        }">
             <div id="test" ref="flyItem" class="fly-item">
                 <div ref="flyItem2" class="fly-item2">
                     <card :attr-name="lessonData.targetAttr" @saved="collectAnimate"></card>
@@ -37,6 +49,7 @@ import { getLessonData } from '@/api/getLessonData';
 import { computed, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 import Card from '../../components/card.vue';
+import router from '../../router';
 
 const store = useStore()
 
@@ -51,16 +64,13 @@ console.log(lessonContent)
 let lessonPage = ref(0)
 let process = ref(0)
 let curContent = ref(lessonContent[0])
-store.commit('changeSubPageName', curContent.value.title)
 console.log(curContent.value)
 
 function nextPage() {
     if (lessonPage.value++ < lessonContent.length - 1) {
         curContent.value = lessonContent[lessonPage.value]
         process.value = lessonPage.value / lessonContent.length * 100
-        store.commit('changeSubPageName', curContent.value.title)
     } else {
-        store.commit('changeSubPageName', '完成✅')
         process.value = 100
     }
 }
@@ -95,46 +105,86 @@ function collectAnimate() {
         }, 490);
     }
 }
-
+let isPass = ref(true)
 watch(process, (newVal) => {
     if (newVal === 100) {
-        cardShow.value = true
+        isPass.value = Math.random() < 0.5
+        cardShow.value = isPass.value ? true : false
     } else {
         cardShow.value = false
     }
 })
+
+function goback() {
+    router.go(-1)
+}
 </script>
 
 <style lang="less" scoped>
-
-.content{
+.content {
     height: calc(100vh - 100px - 30px);
-    padding: 15px;
+    padding: 15px 30px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    .description{
+
+
+    &.finish {
+        justify-content: center;
+
+        .description {
+            text-align: center;
+        }
+
+        text-align: center;
+
+        .btn {
+            margin-top: 18px;
+            padding: 0 20px;
+            font-size: 18px;
+            background: #73c0de;
+            border-color: #73c0de;
+        }
+    }
+
+    .description {
+        // min-height: 15%;
+        font-size: 18px;
+        color: #666;
+        padding-top: 50px;
+    }
+
+    .imageContainer {
         min-height: 30%;
 
+        img {
+            height: 100%;
+            width: 100%;
+        }
     }
-    .imageContainer{
-        min-height: 30%;
-    }
-    .next{
+
+    .next {
         text-align: center;
-        .btn{
-            width:100px;
-            height:100px;
+        padding-bottom: 33px;
+
+        .btn {
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
+            border: 10px orange;
+            border-style: double;
+            padding: 10px;
+            background: #73c0de;
         }
     }
 }
+
 :deep(.van-popup) {
     background-color: transparent;
 }
 
 .fly-item,
-.fly-item > .fly-item2 {
+.fly-item>.fly-item2 {
     // position: absolute;
     // width: 50px;
     // height: 100%;
@@ -146,7 +196,7 @@ watch(process, (newVal) => {
     transition-timing-function: linear;
 }
 
-.fly-item > .fly-item2 {
+.fly-item>.fly-item2 {
     transition-timing-function: cubic-bezier(0.55, 0, 0.85, 0.36);
 }
 </style>

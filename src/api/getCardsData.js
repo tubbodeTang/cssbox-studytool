@@ -345,6 +345,29 @@ const cardsData = [{
             methodCurRank: 0,
         }],
         img: ''
+    },{
+        name: '背景颜色',
+        attr: 'background-color',
+        rankNum: 3,
+        curRankNum: 0,
+        brief: '设置元素的背景',
+        methods: [{
+            id: 1,
+            methodName: 'none',
+            methodBreif: '无背景',
+            methodCurRank: 0,
+        }, {
+            id: 2,
+            methodName: 'transparent',
+            methodBreif: '透明背景',
+            methodCurRank: 0,
+        }, {
+            id: 3,
+            methodName: 'color',
+            methodBreif: '颜色值背景',
+            methodCurRank: 0,
+        }],
+        img: ''
     }
 ]
 // 获取该项目全部涉及到的卡片（属性）数据

@@ -62,6 +62,16 @@ const router = createRouter({
                 path: 'topicDetail',
                 name: 'TopicDetail',
                 component: () => import('@/views/discussCenter/topicDetail.vue')
+            },
+            {
+                path: 'addTopic',
+                name: 'AddTopic',
+                component: () => import('@/views/discussCenter/addTopic.vue')
+            },
+            {
+                path: 'msgList',
+                name: 'MsgList',
+                component: () => import('@/views/discussCenter/msgList.vue')
             }
         ]
     }, {
@@ -78,6 +88,17 @@ const router = createRouter({
                 path: 'cardPage',
                 name: 'CardPage',
                 component: () => import('@/views/collectionCenter/cardPage.vue')
+            }
+        ]
+    }, {
+        path: '/statisticCenter',
+        name: 'StatisticCenter',
+        redirect: '/statisticCenter/statistic',
+        component: () => import('@/views/home/index.vue'),
+        children: [{
+                path: 'statistic',
+                name: 'Statistic',
+                component: () => import('@/views/statisticCenter/statistic.vue')
             }
         ]
     }]
