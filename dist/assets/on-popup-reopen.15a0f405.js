@@ -1,0 +1,1 @@
+import{C as f,z as l}from"./base.8cd46ad1.js";import{J as n,p as e}from"./vendor.006c88a1.js";function m(o,{args:t=[],done:s,canceled:i}){if(o){const a=o.apply(null,t);f(a)?a.then(p=>{p?s():i&&i()}).catch(l):a?s():i&&i()}else s()}const r=Symbol();function P(o){const t=n(r,null);t&&e(t,s=>{s&&o()})}export{r as P,m as c,P as o};

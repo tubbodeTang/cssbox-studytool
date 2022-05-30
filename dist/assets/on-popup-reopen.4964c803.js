@@ -1,1 +1,0 @@
-import{v as p,r as e}from"./base.fd59f32f.js";import{D as l,N as n}from"./vendor.f9b4ed9a.js";function P(o,{args:f=[],done:s,canceled:t}){if(o){const i=o.apply(null,f);p(i)?i.then(a=>{a?s():t&&t()}).catch(e):i?s():t&&t()}else s()}const r=Symbol();function c(o){const f=l(r,null);f&&n(f,s=>{s&&o()})}export{r as P,P as c,c as o};
